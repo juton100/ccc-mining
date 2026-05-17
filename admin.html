@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCM Admin Panel</title>
+<style>
+:root{--bg:#060a10;--bg2:#0c1220;--card:#111928;--teal:#00c9a7;--gold:#f5c518;--red:#ef4444;--green:#22c55e;--blue:#3b82f6;--text:#e8f0fe;--text2:#a0aec0;--border:rgba(0,201,167,0.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
+input,button,select,textarea{font-family:inherit;}
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,rgba(0,201,167,.08),transparent 60%);}
+.lbox{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 28px;width:340px;text-align:center;}
+.ltit{font-size:1.3rem;font-weight:800;letter-spacing:3px;color:var(--teal);margin-bottom:4px;}
+.lsub{font-size:.72rem;color:var(--text2);margin-bottom:24px;letter-spacing:2px;}
+.linput{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-size:.9rem;outline:none;margin-bottom:10px;}
+.linput:focus{border-color:var(--teal);}
+.lbtn{width:100%;background:var(--teal);border:none;border-radius:9px;padding:12px;color:#000;font-size:.92rem;font-weight:700;cursor:pointer;}
+.lerr{color:#f87171;font-size:.78rem;margin-bottom:8px;display:none;}
+#adminScreen{display:none;}
+.adm-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.adm-logo{font-size:1rem;font-weight:800;color:var(--teal);letter-spacing:2px;}
+.adm-logout{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);border-radius:7px;padding:6px 14px;font-size:.78rem;cursor:pointer;}
+.adm-tabs{display:flex;gap:4px;padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;}
+.adm-tabs::-webkit-scrollbar{height:0;}
+.adm-tab{padding:7px 14px;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;border:1px solid var(--border);color:var(--text2);background:transparent;}
+.adm-tab.active{background:var(--teal);color:#000;border-color:var(--teal);}
+.adm-content{padding:16px;max-width:900px;margin:0 auto;}
+.sec{margin-bottom:20px;}
+.sec-title{font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.stat-lbl{font-size:.65rem;color:var(--text2);margin-bottom:5px;letter-spacing:1px;text-transform:uppercase;}
+.stat-val{font-size:1.4rem;font-weight:700;color:var(--teal);}
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;}
+.t-head{display:grid;padding:10px 12px;background:rgba(0,201,167,.06);font-size:.68rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);}
+.t-row{display:grid;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.78rem;align-items:center;}
+.t-row:last-child{border:none;}
+.t-row:hover{background:rgba(255,255,255,.02);}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:700;}
+.badge-pending{background:rgba(245,158,11,.15);color:var(--gold);border:1px solid rgba(245,158,11,.3);}
+.badge-approved{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.badge-rejected{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.btn{padding:5px 12px;border:none;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.btn-green{background:rgba(34,197,94,.2);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.btn-red{background:rgba(239,68,68,.2);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.btn-blue{background:rgba(59,130,246,.2);color:#60a5fa;border:1px solid rgba(59,130,246,.3);}
+.form-group{margin-bottom:10px;}
+.form-label{font-size:.72rem;color:var(--text2);margin-bottom:4px;display:block;}
+.form-input{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:.85rem;outline:none;}
+.form-input:focus{border-color:var(--teal);}
+.form-btn{background:var(--teal);color:#000;border:none;border-radius:8px;padding:10px 20px;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:4px;}
+.toast{position:fixed;top:16px;right:16px;background:rgba(0,201,167,.15);border:1px solid var(--teal);color:var(--teal);padding:10px 18px;border-radius:9px;font-size:.82rem;font-weight:600;z-index:9999;display:none;}
+.filter-tabs{display:flex;gap:5px;margin-bottom:10px;}
+.f-tab{padding:5px 12px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--border);color:var(--text2);background:transparent;}
+.f-tab.active{background:var(--teal);color:#000;border-color:var(--teal);}
+textarea.form-input{min-height:80px;resize:vertical;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="lbox">
+    <div class="ltit">CCM</div>
+    <div class="lsub">ADMIN PANEL</div>
+    <div class="lerr" id="lerr">Wrong credentials</div>
+    <input class="linput" id="lu" placeholder="Admin Username">
+    <input class="linput" id="lp" type="password" placeholder="Password">
+    <button class="lbtn" onclick="doAdminLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminScreen">
+  <div class="adm-header">
+    <div class="adm-logo">⛏️ CCM ADMIN</div>
+    <button class="adm-logout" onclick="location.reload()">Logout</button>
+  </div>
+  <div class="adm-tabs">
+    <div class="adm-tab active" onclick="showTab('dashboard',this)">📊 Dashboard</div>
+    <div class="adm-tab" onclick="showTab('recharge',this)">💳 Recharge</div>
+    <div class="adm-tab" onclick="showTab('withdraw',this)">💰 Withdraw</div>
+    <div class="adm-tab" onclick="showTab('users',this)">👥 Users</div>
+    <div class="adm-tab" onclick="showTab('settings',this)">⚙️ Settings</div>
+    <div class="adm-tab" onclick="showTab('announcement',this)">📢 Announcement</div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="tab-dashboard" class="adm-content">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-lbl">Total Users</div><div class="stat-val" id="dTotalUsers">0</div></div>
+      <div class="stat-card"><div class="stat-lbl">Total Deposited</div><div class="stat-val" id="dTotalDeposit">$0</div></div>
+      <div class="stat-card"><div class="stat-lbl">Pending Recharge</div><div class="stat-val" id="dPendRech" style="color:var(--gold);">0</div></div>
+      <div class="stat-card"><div class="stat-lbl">Pending Withdraw</div><div class="stat-val" id="dPendWd" style="color:var(--red);">0</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Recent Recharge Requests</div>
+      <div id="dashRech"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Recent Withdraw Requests</div>
+      <div id="dashWd"></div>
+    </div>
+  </div>
+
+  <!-- RECHARGE -->
+  <div id="tab-recharge" class="adm-content" style="display:none;">
+    <div class="filter-tabs">
+      <div class="f-tab active" onclick="setRF('all',this)">All</div>
+      <div class="f-tab" onclick="setRF('pending',this)">Pending</div>
+      <div class="f-tab" onclick="setRF('approved',this)">Approved</div>
+    </div>
+    <div id="rechReqList"></div>
+  </div>
+
+  <!-- WITHDRAW -->
+  <div id="tab-withdraw" class="adm-content" style="display:none;">
+    <div class="filter-tabs">
+      <div class="f-tab active" onclick="setWF('all',this)">All</div>
+      <div class="f-tab" onclick="setWF('pending',this)">Pending</div>
+      <div class="f-tab" onclick="setWF('approved',this)">Approved</div>
+    </div>
+    <div id="wdReqList"></div>
+  </div>
+
+  <!-- USERS -->
+  <div id="tab-users" class="adm-content" style="display:none;">
+    <div class="sec">
+      <div class="sec-title">All Users</div>
+      <div id="userList"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Add Balance to User</div>
+      <div class="form-group"><label class="form-label">Username</label><input class="form-input" id="addBalUser" placeholder="Enter username"></div>
+      <div class="form-group"><label class="form-label">Amount (USDT)</label><input class="form-input" type="number" id="addBalAmt" placeholder="Amount"></div>
+      <button class="form-btn" onclick="addBalanceToUser()">Add Balance</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="tab-settings" class="adm-content" style="display:none;">
+    <div class="sec">
+      <div class="sec-title">Admin Credentials</div>
+      <div class="form-group"><label class="form-label">Admin Username</label><input class="form-input" id="setUser" placeholder="admin"></div>
+      <div class="form-group"><label class="form-label">Admin Password</label><input class="form-input" type="password" id="setPass" placeholder="password"></div>
+      <button class="form-btn" onclick="saveAdminCreds()">Save Credentials</button>
+    </div>
+    <div class="sec" style="margin-top:16px;">
+      <div class="sec-title">Platform Name & Notice</div>
+      <div class="form-group"><label class="form-label">Platform Name</label><input class="form-input" id="setPlatName" placeholder="CCM"></div>
+      <div class="form-group"><label class="form-label">Notice Ticker Text</label><input class="form-input" id="setPlatNotice" placeholder="Notice text..."></div>
+      <button class="form-btn" onclick="savePlatform()">Save Platform</button>
+    </div>
+    <div class="sec" style="margin-top:16px;">
+      <div class="sec-title">Recharge Addresses</div>
+      <div id="addrForms"></div>
+      <button class="form-btn" onclick="saveAddrs()">Save Addresses</button>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENT -->
+  <div id="tab-announcement" class="adm-content" style="display:none;">
+    <div class="sec">
+      <div class="sec-title">Announcement Text</div>
+      <div class="form-group">
+        <label class="form-label">Announcement (shown to all users on login)</label>
+        <textarea class="form-input" id="annText" style="min-height:200px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Show announcement</label>
+        <select class="form-input" id="annShow">
+          <option value="yes">Every Login</option>
+          <option value="once">Once per Session</option>
+          <option value="no">Hide</option>
+        </select>
+      </div>
+      <button class="form-btn" onclick="saveAnn()">Save Announcement</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SK='ccm_admin_';
+const UK='ccm_user_';
+
+function getDB(){return window.DB||{ref:()=>({set:()=>Promise.resolve(),once:()=>Promise.resolve({val:()=>null}),on:()=>{},off:()=>{}})}}
+function aS(k,v){localStorage.setItem(SK+k,JSON.stringify(v));try{getDB().ref('ccm/admin/'+k).set(v);}catch(e){}}
+function aL(k,d){try{const v=localStorage.getItem(SK+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function uS(k,v){localStorage.setItem(UK+k,JSON.stringify(v));}
+function uL(k,d){try{const v=localStorage.getItem(UK+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function getUD(uid){return uL('ud_'+uid,{balance:0,profit:0,totalRev:0,todayEarn:0,rechTotal:0,totalLoss:0,bonusBalance:5,vipLevel:0,pendReqs:[]});}
+function setUD(uid,d){
+  localStorage.setItem(UK+'ud_'+uid,JSON.stringify(d));
+  try{getDB().ref('ccm/users/'+uid+'/data').set(d);}catch(e){}
+}
+function getUsers(){try{const v=localStorage.getItem(SK+'users');return v?JSON.parse(v):{};}catch(e){return{};}}
+function saveUsers(u){localStorage.setItem(SK+'users',JSON.stringify(u));try{getDB().ref('ccm/admin/users').set(u);}catch(e){}}
+
+const VPCONF=[
+  {l:0,mn:0,pr:0},{l:1,mn:7,pr:28.57},{l:2,mn:37,pr:29.41},{l:3,mn:137,pr:30.30},
+  {l:4,mn:337,pr:31.25},{l:5,mn:737,pr:32.26},{l:6,mn:1337,pr:33.33},
+  {l:7,mn:3337,pr:34.48},{l:8,mn:7737,pr:37.04},{l:9,mn:17737,pr:40.00}
+];
+function getVIP(rech){let v=0;VPCONF.forEach(c=>{if(rech>=c.mn) v=c.l;});return v;}
+
+let ADMIN_USER='admin',ADMIN_PASS='admin123';
+
+function doAdminLogin(){
+  const u=document.getElementById('lu').value.trim();
+  const p=document.getElementById('lp').value;
+  getDB().ref('ccm/admin').once('value').then(snap=>{
+    const d=snap.val()||{};
+    if(d) Object.keys(d).forEach(k=>localStorage.setItem(SK+k,JSON.stringify(d[k])));
+    // Sync users too
+    getDB().ref('ccm/users').once('value').then(usnap=>{
+      const users=usnap.val()||{};
+      Object.keys(users).forEach(uid=>{
+        if(users[uid].data) localStorage.setItem(UK+'ud_'+uid,JSON.stringify(users[uid].data));
+      });
+    }).catch(()=>{});
+    ADMIN_USER=aL('user','admin');ADMIN_PASS=aL('pass','admin123');
+    if(u===ADMIN_USER&&p===ADMIN_PASS){
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('adminScreen').style.display='block';
+      initAdmin();
+    } else {
+      document.getElementById('lerr').style.display='block';
+    }
+  }).catch(()=>{
+    ADMIN_USER=aL('user','admin');ADMIN_PASS=aL('pass','admin123');
+    if(u===ADMIN_USER&&p===ADMIN_PASS){
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('adminScreen').style.display='block';
+      initAdmin();
+    } else {
+      document.getElementById('lerr').style.display='block';
+    }
+  });
+}
+
+function showTab(t,el){
+  document.querySelectorAll('[id^="tab-"]').forEach(x=>x.style.display='none');
+  document.querySelectorAll('.adm-tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('tab-'+t).style.display='block';
+  el.classList.add('active');
+  if(t==='dashboard') refreshDash();
+  if(t==='recharge') renderRechReqs();
+  if(t==='withdraw') renderWdReqs();
+  if(t==='users') renderUsers();
+  if(t==='settings') loadForms();
+  if(t==='announcement') loadAnn();
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+
+function refreshDash(){
+  const users=getUsers();
+  const uids=Object.keys(users);
+  document.getElementById('dTotalUsers').textContent=uids.length;
+  let totalDeposit=0;
+  uids.forEach(uid=>{const d=getUD(uid);totalDeposit+=(d.rechTotal||0);});
+  document.getElementById('dTotalDeposit').textContent='$'+totalDeposit.toFixed(2);
+  const rr=aL('rechargeRequests',[]);
+  const wr=aL('withdrawRequests',[]);
+  document.getElementById('dPendRech').textContent=rr.filter(r=>r.status==='pending').length;
+  document.getElementById('dPendWd').textContent=wr.filter(r=>r.status==='pending').length;
+  // Recent recharge
+  const dr=document.getElementById('dashRech');
+  const pendRech=rr.filter(r=>r.status==='pending').slice(-5).reverse();
+  if(!pendRech.length){dr.innerHTML='<div style="color:var(--text2);font-size:.78rem;padding:12px;">No pending recharge requests</div>';return;}
+  dr.innerHTML=renderReqTable(pendRech,'rech');
+  // Recent withdraw
+  const dw=document.getElementById('dashWd');
+  const pendWd=wr.filter(r=>r.status==='pending').slice(-5).reverse();
+  if(!pendWd.length){dw.innerHTML='<div style="color:var(--text2);font-size:.78rem;padding:12px;">No pending withdraw requests</div>';return;}
+  dw.innerHTML=renderReqTable(pendWd,'wd');
+}
+
+function renderReqTable(reqs,type){
+  return`<div class="table-wrap">
+    ${reqs.map(r=>`
+      <div class="t-row" style="grid-template-columns:1fr 80px 90px 130px;">
+        <div><div style="font-weight:600;">${r.username||r.uid}</div><div style="font-size:.65rem;color:var(--text2);">${r.time||''}</div></div>
+        <div style="font-weight:700;color:var(--teal);">$${r.amount}</div>
+        <div><span class="badge badge-${r.status}">${r.status}</span></div>
+        <div style="display:flex;gap:5px;">
+          ${r.status==='pending'?`<button class="btn btn-green" onclick="${type==='rech'?'approveRech':'approveWd'}('${r.id}')">✅ Approve</button><button class="btn btn-red" onclick="${type==='rech'?'rejectRech':'rejectWd'}('${r.id}')">❌ Reject</button>`:'<span style="color:var(--text2);font-size:.7rem;">Processed</span>'}
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+let rFilter='all',wFilter='all';
+function setRF(f,el){rFilter=f;document.querySelectorAll('#tab-recharge .f-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderRechReqs();}
+function setWF(f,el){wFilter=f;document.querySelectorAll('#tab-withdraw .f-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderWdReqs();}
+
+function renderRechReqs(){
+  const reqs=aL('rechargeRequests',[]);
+  const filtered=rFilter==='all'?reqs:reqs.filter(r=>r.status===rFilter);
+  const el=document.getElementById('rechReqList');
+  if(!filtered.length){el.innerHTML='<div style="color:var(--text2);font-size:.78rem;padding:12px;">No requests found</div>';return;}
+  el.innerHTML=renderReqTable([...filtered].reverse(),'rech');
+}
+
+function renderWdReqs(){
+  const reqs=aL('withdrawRequests',[]);
+  const filtered=wFilter==='all'?reqs:reqs.filter(r=>r.status===wFilter);
+  const el=document.getElementById('wdReqList');
+  if(!filtered.length){el.innerHTML='<div style="color:var(--text2);font-size:.78rem;padding:12px;">No requests found</div>';return;}
+  el.innerHTML=renderReqTable([...filtered].reverse(),'wd');
+}
+
+function approveRech(id){
+  const reqs=aL('rechargeRequests',[]);
+  const req=reqs.find(r=>r.id===id);
+  if(!req||req.status!=='pending') return;
+  const d=getUD(req.uid);
+  const isFirstDeposit=!(d.rechTotal>0);
+  d.balance=+(d.balance+req.amount).toFixed(6);
+  d.rechTotal=+(d.rechTotal+req.amount).toFixed(6);
+  d.vipLevel=getVIP(d.rechTotal);
+  // First deposit match bonus
+  if(isFirstDeposit){
+    d.balance=+(d.balance+req.amount).toFixed(6);
+    d.profit=+(( d.profit||0)+req.amount).toFixed(6);
+    toast(`🎁 First deposit match: +$${req.amount} bonus to ${req.username}!`);
+  }
+  if(!d.pendReqs) d.pendReqs=[];
+  const ur=d.pendReqs.find(r=>r.id===id);
+  if(ur){ur.status='approved';}
+  else d.pendReqs.push({id,type:'recharge',amount:req.amount,status:'approved'});
+  setUD(req.uid,d);
+  // Referral bonus on deposit
+  if(d.referredBy&&req.amount>=10) giveDepositRefBonus(req.uid,d.referredBy,req.amount);
+  req.status='approved';req.processedAt=new Date().toLocaleString();
+  aS('rechargeRequests',reqs);
+  getDB().ref('ccm/admin/updated').set(Date.now());
+  toast(`✅ $${req.amount} credited to ${req.username}! (VIP${d.vipLevel})`);
+  renderRechReqs();refreshDash();renderUsers();
+}
+
+function rejectRech(id){
+  const reqs=aL('rechargeRequests',[]);
+  const req=reqs.find(r=>r.id===id);
+  if(!req||req.status!=='pending') return;
+  const d=getUD(req.uid);
+  if(!d.pendReqs) d.pendReqs=[];
+  const ur=d.pendReqs.find(r=>r.id===id);
+  if(ur) ur.status='rejected';
+  setUD(req.uid,d);
+  req.status='rejected';req.processedAt=new Date().toLocaleString();
+  aS('rechargeRequests',reqs);
+  toast(`❌ Recharge rejected for ${req.username}`);
+  renderRechReqs();refreshDash();
+}
+
+function approveWd(id){
+  const reqs=aL('withdrawRequests',[]);
+  const req=reqs.find(r=>r.id===id);
+  if(!req||req.status!=='pending') return;
+  const d=getUD(req.uid);
+  d.balance=+(d.balance-req.amount).toFixed(6);
+  if(d.balance<0) d.balance=0;
+  if(!d.pendReqs) d.pendReqs=[];
+  const ur=d.pendReqs.find(r=>r.id===id);
+  if(ur) ur.status='approved';
+  else d.pendReqs.push({id,type:'withdraw',amount:req.amount,status:'approved'});
+  setUD(req.uid,d);
+  req.status='approved';req.processedAt=new Date().toLocaleString();
+  aS('withdrawRequests',reqs);
+  getDB().ref('ccm/admin/updated').set(Date.now());
+  toast(`✅ Withdrawal approved for ${req.username}: $${req.amount}`);
+  renderWdReqs();refreshDash();
+}
+
+function rejectWd(id){
+  const reqs=aL('withdrawRequests',[]);
+  const req=reqs.find(r=>r.id===id);
+  if(!req||req.status!=='pending') return;
+  const d=getUD(req.uid);
+  if(!d.pendReqs) d.pendReqs=[];
+  const ur=d.pendReqs.find(r=>r.id===id);
+  if(ur) ur.status='rejected';
+  setUD(req.uid,d);
+  req.status='rejected';req.processedAt=new Date().toLocaleString();
+  aS('withdrawRequests',reqs);
+  toast(`❌ Withdrawal rejected for ${req.username}`);
+  renderWdReqs();refreshDash();
+}
+
+function giveDepositRefBonus(depositorUid,refCode,depositAmount){
+  try{
+    const users=getUsers();
+    const rates=[0.25,0.15,0.07];
+    const fixedBonus=5;
+    let currentCode=refCode;
+    for(let level=0;level<3;level++){
+      const refUid=Object.keys(users).find(id=>{const ud=getUD(id);return ud.invCode===currentCode;});
+      if(!refUid) break;
+      const rd=getUD(refUid);
+      const comm=level===0?+(fixedBonus+depositAmount*rates[0]).toFixed(6):+(depositAmount*rates[level]).toFixed(6);
+      rd.balance=+(rd.balance+comm).toFixed(6);
+      rd.totalRev=+(rd.totalRev+comm).toFixed(6);
+      rd.todayEarn=+(rd.todayEarn+comm).toFixed(6);
+      if(!rd.commEarned) rd.commEarned=0;
+      rd.commEarned=+(rd.commEarned+comm).toFixed(6);
+      setUD(refUid,rd);
+      toast(`👥 Ref bonus: +$${comm} to level${level+1} (${users[refUid]?.username})`);
+      currentCode=rd.referredBy||'';
+      if(!currentCode) break;
+    }
+  }catch(e){}
+}
+
+function renderUsers(){
+  const users=getUsers();
+  const el=document.getElementById('userList');
+  const uids=Object.keys(users);
+  if(!uids.length){el.innerHTML='<div style="color:var(--text2);font-size:.78rem;padding:12px;">No users yet</div>';return;}
+  el.innerHTML=`<div class="table-wrap">
+    <div class="t-head" style="grid-template-columns:1fr 80px 80px 70px 80px 80px;">
+      <div>User</div><div>Balance</div><div>Deposited</div><div>VIP</div><div>Profit</div><div>Action</div>
+    </div>
+    ${uids.map(uid=>{
+      const u=users[uid];
+      const d=getUD(uid);
+      return`<div class="t-row" style="grid-template-columns:1fr 80px 80px 70px 80px 80px;">
+        <div><div style="font-weight:600;">${u.username}</div><div style="font-size:.62rem;color:var(--text2);">${u.phone} · ${uid}</div></div>
+        <div style="color:var(--teal);font-weight:700;">$${(d.balance||0).toFixed(2)}</div>
+        <div>$${(d.rechTotal||0).toFixed(2)}</div>
+        <div><span class="badge badge-approved">VIP${d.vipLevel||0}</span></div>
+        <div style="color:var(--green);">$${(d.profit||0).toFixed(2)}</div>
+        <div><button class="btn btn-red" onclick="deleteUser('${uid}')">Del</button></div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function deleteUser(uid){
+  if(!confirm('Delete this user?')) return;
+  const users=getUsers();
+  delete users[uid];
+  saveUsers(users);
+  localStorage.removeItem(UK+'ud_'+uid);
+  getDB().ref('ccm/users/'+uid).remove();
+  toast('✅ User deleted');
+  renderUsers();refreshDash();
+}
+
+function addBalanceToUser(){
+  const username=document.getElementById('addBalUser').value.trim();
+  const amt=parseFloat(document.getElementById('addBalAmt').value)||0;
+  if(!username||amt<=0){toast('⚠️ Enter username and amount');return;}
+  const users=getUsers();
+  const uid=Object.keys(users).find(id=>users[id].username===username);
+  if(!uid){toast('⚠️ User not found');return;}
+  const d=getUD(uid);
+  d.balance=+(d.balance+amt).toFixed(6);
+  d.rechTotal=+(d.rechTotal+amt).toFixed(6);
+  d.vipLevel=getVIP(d.rechTotal);
+  setUD(uid,d);
+  document.getElementById('addBalUser').value='';
+  document.getElementById('addBalAmt').value='';
+  toast(`✅ $${amt} added to ${username}! (VIP${d.vipLevel})`);
+  renderUsers();
+}
+
+function loadForms(){
+  document.getElementById('setUser').value=aL('user','admin');
+  document.getElementById('setPass').value='';
+  const pl=aL('platform',{name:'CCM',notice:''});
+  document.getElementById('setPlatName').value=pl.name||'CCM';
+  document.getElementById('setPlatNotice').value=pl.notice||'';
+  const opts=aL('rechargeOptions',[
+    {id:'bep20',name:'BEP20-USDT',net:'BNB Smart Chain',addr:'',ico:'🟡'},
+    {id:'trc20',name:'TRC20-USDT',net:'TRON Network',addr:'',ico:'🔴'},
+    {id:'erc20',name:'ERC20-USDT',net:'Ethereum Network',addr:'',ico:'🔵'},
+  ]);
+  const el=document.getElementById('addrForms');
+  el.innerHTML=opts.map(r=>`
+    <div style="margin-bottom:12px;background:rgba(255,255,255,.03);border-radius:9px;padding:12px;border:1px solid var(--border);">
+      <div style="font-size:.78rem;font-weight:600;margin-bottom:8px;color:var(--teal);">${r.ico} ${r.name}</div>
+      <div class="form-group"><label class="form-label">Wallet Address</label>
+        <input class="form-input" id="addr_${r.id}" value="${r.addr||''}" placeholder="Enter ${r.name} address">
+      </div>
+    </div>`).join('');
+}
+
+function saveAdminCreds(){
+  const u=document.getElementById('setUser').value.trim();
+  const p=document.getElementById('setPass').value;
+  if(!u){toast('⚠️ Enter username');return;}
+  aS('user',u);
+  if(p) aS('pass',p);
+  toast('✅ Credentials saved!');
+}
+
+function savePlatform(){
+  const name=document.getElementById('setPlatName').value.trim()||'CCM';
+  const notice=document.getElementById('setPlatNotice').value.trim();
+  aS('platform',{name,notice});
+  toast('✅ Platform settings saved!');
+}
+
+function saveAddrs(){
+  const opts=aL('rechargeOptions',[
+    {id:'bep20',name:'BEP20-USDT',net:'BNB Smart Chain',addr:'',ico:'🟡'},
+    {id:'trc20',name:'TRC20-USDT',net:'TRON Network',addr:'',ico:'🔴'},
+    {id:'erc20',name:'ERC20-USDT',net:'Ethereum Network',addr:'',ico:'🔵'},
+  ]);
+  opts.forEach(r=>{
+    const el=document.getElementById('addr_'+r.id);
+    if(el) r.addr=el.value.trim();
+  });
+  aS('rechargeOptions',opts);
+  toast('✅ Addresses saved!');
+}
+
+function loadAnn(){
+  const ann=aL('announcement',{text:'',show:'once'});
+  document.getElementById('annText').value=ann.text||'';
+  document.getElementById('annShow').value=ann.show||'once';
+}
+
+function saveAnn(){
+  const text=document.getElementById('annText').value;
+  const show=document.getElementById('annShow').value;
+  aS('announcement',{text,show});
+  toast('✅ Announcement saved!');
+}
+
+function initAdmin(){
+  // Sync from Firebase
+  getDB().ref('ccm/admin').once('value').then(snap=>{
+    const d=snap.val()||{};
+    Object.keys(d).forEach(k=>localStorage.setItem(SK+k,JSON.stringify(d[k])));
+    getDB().ref('ccm/users').once('value').then(usnap=>{
+      const users=usnap.val()||{};
+      Object.keys(users).forEach(uid=>{
+        if(users[uid].data) localStorage.setItem(UK+'ud_'+uid,JSON.stringify(users[uid].data));
+      });
+      refreshDash();
+    });
+  });
+  // Real-time listeners
+  getDB().ref('ccm/admin/rechargeRequests').on('value',snap=>{
+    const d=snap.val();if(d) localStorage.setItem(SK+'rechargeRequests',JSON.stringify(d));
+    refreshDash();
+  });
+  getDB().ref('ccm/admin/withdrawRequests').on('value',snap=>{
+    const d=snap.val();if(d) localStorage.setItem(SK+'withdrawRequests',JSON.stringify(d));
+    refreshDash();
+  });
+  getDB().ref('ccm/admin/users').on('value',snap=>{
+    const d=snap.val();if(d) localStorage.setItem(SK+'users',JSON.stringify(d));
+  });
+  getDB().ref('ccm/users').on('value',snap=>{
+    const users=snap.val()||{};
+    Object.keys(users).forEach(uid=>{
+      if(users[uid].data) localStorage.setItem(UK+'ud_'+uid,JSON.stringify(users[uid].data));
+    });
+    refreshDash();
+  });
+  setInterval(refreshDash,15000);
+}
+</script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+(function(){
+  try{
+    const cfg={apiKey:"AIzaSyCGzvsqwtDaHKVGqeLvMcT3fHUMu6EMSWo",authDomain:"crypton-mining-exchange.firebaseapp.com",databaseURL:"https://crypton-mining-exchange-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"crypton-mining-exchange",storageBucket:"crypton-mining-exchange.firebasestorage.app",messagingSenderId:"631647617135",appId:"1:631647617135:web:fe5024474e8757f99f0d9a"};
+    if(!firebase.apps.length) firebase.initializeApp(cfg);
+    window.DB=firebase.database();
+    console.log('CCM Admin Firebase ✅');
+  }catch(e){
+    window.DB={ref:()=>({set:()=>Promise.resolve(),once:()=>Promise.resolve({val:()=>null}),on:()=>{},off:()=>{}})};
+  }
+})();
+</script>
+</body>
+</html>
