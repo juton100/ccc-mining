@@ -211,33 +211,42 @@ let ADMIN_USER='admin',ADMIN_PASS='admin123';
 function doAdminLogin(){
   const u=document.getElementById('lu').value.trim();
   const p=document.getElementById('lp').value;
+  const btn=document.querySelector('.lbtn');
+  if(btn){btn.textContent='Logging in...';btn.disabled=true;}
+  const lerr=document.getElementById('lerr');
+  lerr.style.display='none';
+
+  function tryLogin(){
+    ADMIN_USER=aL('user','admin');
+    ADMIN_PASS=aL('pass','admin123');
+    if(u===ADMIN_USER&&p===ADMIN_PASS){
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('adminScreen').style.display='block';
+      initAdmin();
+    } else {
+      lerr.textContent='Wrong username or password';
+      lerr.style.display='block';
+      if(btn){btn.textContent='Login';btn.disabled=false;}
+    }
+  }
+
+  // Try Firebase first with 3s timeout, fallback to localStorage
+  const timeout=setTimeout(()=>tryLogin(), 3000);
   getDB().ref('ccm/admin').once('value').then(snap=>{
+    clearTimeout(timeout);
     const d=snap.val()||{};
-    if(d) Object.keys(d).forEach(k=>localStorage.setItem(SK+k,JSON.stringify(d[k])));
-    // Sync users too
+    Object.keys(d).forEach(k=>localStorage.setItem(SK+k,JSON.stringify(d[k])));
+    // Sync users
     getDB().ref('ccm/users').once('value').then(usnap=>{
       const users=usnap.val()||{};
       Object.keys(users).forEach(uid=>{
         if(users[uid].data) localStorage.setItem(UK+'ud_'+uid,JSON.stringify(users[uid].data));
       });
     }).catch(()=>{});
-    ADMIN_USER=aL('user','admin');ADMIN_PASS=aL('pass','admin123');
-    if(u===ADMIN_USER&&p===ADMIN_PASS){
-      document.getElementById('loginScreen').style.display='none';
-      document.getElementById('adminScreen').style.display='block';
-      initAdmin();
-    } else {
-      document.getElementById('lerr').style.display='block';
-    }
+    tryLogin();
   }).catch(()=>{
-    ADMIN_USER=aL('user','admin');ADMIN_PASS=aL('pass','admin123');
-    if(u===ADMIN_USER&&p===ADMIN_PASS){
-      document.getElementById('loginScreen').style.display='none';
-      document.getElementById('adminScreen').style.display='block';
-      initAdmin();
-    } else {
-      document.getElementById('lerr').style.display='block';
-    }
+    clearTimeout(timeout);
+    tryLogin();
   });
 }
 
@@ -572,12 +581,23 @@ function initAdmin(){
 </script>
 
 <!-- Firebase -->
+
+
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 (function(){
   try{
-    const cfg={apiKey:"AIzaSyCGzvsqwtDaHKVGqeLvMcT3fHUMu6EMSWo",authDomain:"crypton-mining-exchange.firebaseapp.com",databaseURL:"https://crypton-mining-exchange-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"crypton-mining-exchange",storageBucket:"crypton-mining-exchange.firebasestorage.app",messagingSenderId:"631647617135",appId:"1:631647617135:web:fe5024474e8757f99f0d9a"};
+    const cfg={
+      apiKey:"AIzaSyCmYPAb0B0Ibw3YVlc5jNhYVl2RbeZFYa8",
+      authDomain:"ccm-crypto-2a7dc.firebaseapp.com",
+      projectId:"ccm-crypto-2a7dc",
+      storageBucket:"ccm-crypto-2a7dc.firebasestorage.app",
+      messagingSenderId:"262734564890",
+      appId:"1:262734564890:web:535fb0fc84ffa6a5578ba3",
+      databaseURL:"https://ccm-crypto-7fa51-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
     if(!firebase.apps.length) firebase.initializeApp(cfg);
     window.DB=firebase.database();
     console.log('CCM Admin Firebase ✅');

@@ -1806,5 +1806,33 @@ window.DB={ref:()=>({set:()=>Promise.resolve(),once:()=>Promise.resolve({val:()=
 }
 })();
 </script>
+
+<!-- Firebase SDK v9 compat -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+<script>
+(function(){
+  try{
+    const cfg={
+      apiKey:"AIzaSyCmYPAb0B0Ibw3YVlc5jNhYVl2RbeZFYa8",
+      authDomain:"ccm-crypto-2a7dc.firebaseapp.com",
+      projectId:"ccm-crypto-2a7dc",
+      storageBucket:"ccm-crypto-2a7dc.firebasestorage.app",
+      messagingSenderId:"262734564890",
+      appId:"1:262734564890:web:535fb0fc84ffa6a5578ba3",
+      measurementId:"G-LGT5Y0YQJ1",
+      databaseURL:"https://ccm-crypto-7fa51-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+    if(!firebase.apps.length) firebase.initializeApp(cfg);
+    window.DB=firebase.database();
+    try{firebase.analytics();}catch(e){}
+    console.log('CCM Firebase connected ✅');
+  }catch(e){
+    console.warn('Firebase offline, using localStorage:',e.message);
+    window.DB={ref:()=>({set:()=>Promise.resolve(),once:()=>Promise.resolve({val:()=>null}),on:()=>{},off:()=>{}})};
+  }
+})();
+</script>
 </body>
 </html>
