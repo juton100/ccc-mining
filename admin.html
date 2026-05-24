@@ -486,17 +486,32 @@ function loadForms(){
   const pl=aL('platform',{name:'CCM',notice:''});
   document.getElementById('setPlatName').value=pl.name||'CCM';
   document.getElementById('setPlatNotice').value=pl.notice||'';
-  const opts=aL('rechargeOptions',[
-    {id:'bep20',name:'BEP20-USDT',net:'BNB Smart Chain',addr:'',ico:'🟡'},
-    {id:'trc20',name:'TRC20-USDT',net:'TRON Network',addr:'',ico:'🔴'},
-    {id:'erc20',name:'ERC20-USDT',net:'Ethereum Network',addr:'',ico:'🔵'},
-  ]);
+  const ALL_NETS=[
+    {id:'bep20',name:'BEP20-USDT',net:'BNB Smart Chain',ico:'🟡',min:1},
+    {id:'trc20',name:'TRC20-USDT',net:'TRON Network',ico:'🔴',min:1},
+    {id:'erc20',name:'ERC20-USDT',net:'Ethereum Network',ico:'🔵',min:10},
+    {id:'polygon',name:'POLYGON-USDT',net:'Polygon Network',ico:'🟣',min:1},
+    {id:'sol',name:'SOL-USDT',net:'Solana Network',ico:'🟢',min:1},
+    {id:'arb',name:'ARB-USDT',net:'Arbitrum Network',ico:'🔷',min:1},
+    {id:'op',name:'OP-USDT',net:'Optimism Network',ico:'🔴',min:1},
+    {id:'avax',name:'AVAX-USDT',net:'Avalanche Network',ico:'🔺',min:1},
+    {id:'btc',name:'BTC',net:'Bitcoin Network',ico:'🟠',min:0.0001},
+    {id:'eth',name:'ETH',net:'Ethereum Network',ico:'⬡',min:0.005},
+    {id:'bnb',name:'BNB',net:'BNB Smart Chain',ico:'💛',min:0.01},
+    {id:'ton',name:'TON-USDT',net:'TON Network',ico:'💎',min:1},
+  ];
+  const saved=aL('rechargeOptions',[]);
+  const opts=ALL_NETS.map(n=>{
+    const s=saved.find(x=>x.id===n.id)||{};
+    return {...n,addr:s.addr||''};
+  });
   const el=document.getElementById('addrForms');
   el.innerHTML=opts.map(r=>`
-    <div style="margin-bottom:12px;background:rgba(255,255,255,.03);border-radius:9px;padding:12px;border:1px solid var(--border);">
-      <div style="font-size:.78rem;font-weight:600;margin-bottom:8px;color:var(--teal);">${r.ico} ${r.name}</div>
-      <div class="form-group"><label class="form-label">Wallet Address</label>
-        <input class="form-input" id="addr_${r.id}" value="${r.addr||''}" placeholder="Enter ${r.name} address">
+    <div style="margin-bottom:10px;background:rgba(255,255,255,.03);border-radius:9px;padding:11px 12px;border:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+      <div style="font-size:1.2rem;flex-shrink:0;">${r.ico}</div>
+      <div style="flex:1;">
+        <div style="font-size:.75rem;font-weight:700;color:var(--teal);margin-bottom:5px;">${r.name} <span style="color:var(--text2);font-weight:400;font-size:.65rem;">(${r.net} · Min: $${r.min})</span></div>
+        <input class="form-input" id="addr_${r.id}" value="${r.addr||''}" placeholder="Enter ${r.name} wallet address" style="padding:7px 10px;font-size:.8rem;">
       </div>
     </div>`).join('');
 }
@@ -518,17 +533,26 @@ function savePlatform(){
 }
 
 function saveAddrs(){
-  const opts=aL('rechargeOptions',[
-    {id:'bep20',name:'BEP20-USDT',net:'BNB Smart Chain',addr:'',ico:'🟡'},
-    {id:'trc20',name:'TRC20-USDT',net:'TRON Network',addr:'',ico:'🔴'},
-    {id:'erc20',name:'ERC20-USDT',net:'Ethereum Network',addr:'',ico:'🔵'},
-  ]);
-  opts.forEach(r=>{
-    const el=document.getElementById('addr_'+r.id);
-    if(el) r.addr=el.value.trim();
+  const ALL_NETS=[
+    {id:'bep20',name:'BEP20-USDT',net:'BNB Smart Chain',ico:'🟡',min:1},
+    {id:'trc20',name:'TRC20-USDT',net:'TRON Network',ico:'🔴',min:1},
+    {id:'erc20',name:'ERC20-USDT',net:'Ethereum Network',ico:'🔵',min:10},
+    {id:'polygon',name:'POLYGON-USDT',net:'Polygon Network',ico:'🟣',min:1},
+    {id:'sol',name:'SOL-USDT',net:'Solana Network',ico:'🟢',min:1},
+    {id:'arb',name:'ARB-USDT',net:'Arbitrum Network',ico:'🔷',min:1},
+    {id:'op',name:'OP-USDT',net:'Optimism Network',ico:'🔴',min:1},
+    {id:'avax',name:'AVAX-USDT',net:'Avalanche Network',ico:'🔺',min:1},
+    {id:'btc',name:'BTC',net:'Bitcoin Network',ico:'🟠',min:0.0001},
+    {id:'eth',name:'ETH',net:'Ethereum Network',ico:'⬡',min:0.005},
+    {id:'bnb',name:'BNB',net:'BNB Smart Chain',ico:'💛',min:0.01},
+    {id:'ton',name:'TON-USDT',net:'TON Network',ico:'💎',min:1},
+  ];
+  const opts=ALL_NETS.map(n=>{
+    const el=document.getElementById('addr_'+n.id);
+    return {...n, addr:el?el.value.trim():''};
   });
   aS('rechargeOptions',opts);
-  toast('✅ Addresses saved!');
+  toast('✅ All 12 addresses saved!');
 }
 
 function loadAnn(){
