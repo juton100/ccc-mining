@@ -613,7 +613,7 @@ Level 3: <span style="color:var(--gold);font-weight:700;">7%</span> of deposit<b
 const SK='ccm_admin_';
 const UK='ccm_user_';
 const SITE_URL=window.location.origin+window.location.pathname.replace('index.html','');
-const SUPPORT_EMAIL='support@ccmining.com';
+const SUPPORT_EMAIL='cryptominingplatform920@gmail.com';
 // ══ MINING VIP PLANS ══
 const VPCONF=[
 {l:0,mn:0,pr:0,label:'Free'},
@@ -778,7 +778,13 @@ function startApp(){
 document.getElementById('authScreen').style.display='none';
 document.getElementById('appScreen').style.display='flex';
 syncAdminFromFirebase(()=>{loadAll();showAnnIfNeeded();});
-if(CU){listenUserChanges(CU.uid);listenAdminChanges();}
+if(CU){
+listenUserChanges(CU.uid);
+listenAdminChanges();
+// Start daily return timer if plan active
+const d=getUD(CU.uid);
+if(d.activePlan||d.vipLevel>0) startDailyReturnTimer();
+}
 }
 // ══ PAGE NAV ══
 const SUBPGS=['recharge','withdraw','invite','team','download','recharge-detail','activity','color-trade','binary-trade'];
@@ -1166,21 +1172,74 @@ function activateMiningPlan(level){
 if(!CU){showToast('Please login first');return;}
 const d=getUD(CU.uid);
 const plan=VPCONF[level];
-if((d.balance||0)<plan.mn){
-showToast('⚠️ Need $'+plan.mn+' USDT balance. Please recharge!');
-setTimeout(()=>showPg('recharge'),1500);
-return;
+// Check if already active
+if(d.vipLevel===level&&d.activePlan){
+showToast('✅ VIP'+level+' already active! Earning '+plan.pr+'%/day');return;
 }
-// Auto-activate — deduct and start earning
-d.rechTotal=+(d.rechTotal+plan.mn).toFixed(6);
+if((d.balance||0)<plan.mn){
+showToast('⚠️ Need $'+plan.mn+' USDT. Please recharge!');
+setTimeout(()=>showPg('recharge'),1500);return;
+}
+// Deduct plan cost & activate immediately
 d.balance=+(d.balance-plan.mn).toFixed(6);
+d.rechTotal=+(d.rechTotal+plan.mn).toFixed(6);
 d.vipLevel=getVIP(d.rechTotal);
-d.quantDone=false;d.quantDate='';
+d.activePlan=level;
+d.planActivatedAt=Date.now();
+d.planExpiry=Date.now()+(30*24*60*60*1000); // 30 days
+d.quantDone=false;
+d.quantDate='';
+d.lastDailyReturn=0;
 setUD(CU.uid,d);
 refreshUI();renderVIP();renderVIP2();
-showToast('✅ VIP'+level+' activated! Mining started automatically!');
-// Auto start mining
-setTimeout(()=>startMining(),500);
+// Immediately give first return
+const firstReturn=+(plan.mn*(plan.pr/100)).toFixed(6);
+setTimeout(()=>{
+const d2=getUD(CU.uid);
+d2.balance=+(d2.balance+firstReturn).toFixed(6);
+d2.profit=+(d2.profit+firstReturn).toFixed(6);
+d2.todayEarn=+(d2.todayEarn+firstReturn).toFixed(6);
+d2.totalRev=+(d2.totalRev+firstReturn).toFixed(6);
+d2.quantDone=true;
+d2.quantDate=new Date().toDateString();
+setUD(CU.uid,d2);
+refreshUI();
+showToast('⛏️ Mining active! First return: +$'+firstReturn.toFixed(2)+' USDT earned!');
+if(d2.referredBy) giveRefCommission(CU.uid,d2.referredBy,firstReturn,'mining');
+},1500);
+showToast('✅ VIP'+level+' activated! $'+plan.mn+' invested. Starting mining...');
+// Set up daily auto-return checker
+startDailyReturnTimer();
+}
+
+function startDailyReturnTimer(){
+// Check every minute if daily return is due
+setInterval(()=>{
+if(!CU) return;
+const d=getUD(CU.uid);
+if(!d.activePlan||!d.planActivatedAt) return;
+const plan=VPCONF[d.activePlan]||VPCONF[d.vipLevel||0];
+if(!plan||plan.pr<=0) return;
+const today=new Date().toDateString();
+if(d.quantDate===today) return; // already paid today
+// Check if 24h passed since last return
+const lastPaid=d.lastDailyReturn||d.planActivatedAt;
+const hoursPassed=(Date.now()-lastPaid)/(1000*60*60);
+if(hoursPassed>=24){
+const dailyReturn=+(d.rechTotal*(plan.pr/100)).toFixed(6);
+d.balance=+(d.balance+dailyReturn).toFixed(6);
+d.profit=+(d.profit+dailyReturn).toFixed(6);
+d.todayEarn=+(d.todayEarn+dailyReturn).toFixed(6);
+d.totalRev=+(d.totalRev+dailyReturn).toFixed(6);
+d.quantDone=true;
+d.quantDate=today;
+d.lastDailyReturn=Date.now();
+setUD(CU.uid,d);
+refreshUI();
+showToast('💰 Daily return credited: +$'+dailyReturn.toFixed(2)+' USDT ('+plan.pr+'%/day)');
+if(d.referredBy) giveRefCommission(CU.uid,d.referredBy,dailyReturn,'mining');
+}
+},60000); // check every 1 minute
 }
 
 function startMining(){
