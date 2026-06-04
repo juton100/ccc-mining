@@ -40,7 +40,7 @@
 <input class="ainput" id="regPass" type="password" placeholder="Password (min 6 chars)">
 <input class="ainput" id="regPass2" type="password" placeholder="Confirm Password">
 <input class="ainput" id="regRef" placeholder="Referral Code (optional)">
-<button class="ab" onclick="doRegister()">Register & Get $5 Bonus</button>
+<button class="ab" onclick="doRegister()">Register & Get $1 Bonus</button>
 <div class="aswitch">Already have an account? <span onclick="sw('login')">Login</span></div>
 </div>
 </div>
@@ -61,7 +61,7 @@
 <div class="tico" onclick="showPg('me')">👤</div>
 </div>
 </div>
-<div class="nbar"><span>🔔</span><span class="ntxt" id="ntxt">⚠️ Withdrawal requires a deposit first &nbsp;|&nbsp; 🎁 Register & get $5 FREE bonus &nbsp;|&nbsp; ⛏️ Start mining and earn daily profits &nbsp;|&nbsp; 👥 Refer friends & earn $5 per referral &nbsp;|&nbsp; 💰 First deposit MATCH BONUS!</span></div>
+<div class="nbar"><span>🔔</span><span class="ntxt" id="ntxt">⚠️ Withdrawal requires a deposit first &nbsp;|&nbsp; 🎁 Register & get $1 FREE bonus &nbsp;|&nbsp; ⛏️ Start mining and earn daily profits &nbsp;|&nbsp; 👥 Refer friends & earn $5 per referral &nbsp;|&nbsp; 💰 First deposit MATCH BONUS!</span></div>
 <div class="pages">
 <div class="pg active" id="pg-home">
 <div class="mktticker" id="mktTicker"></div>
@@ -503,7 +503,7 @@ Level 3: <span style="color:var(--gold);font-weight:700;">7%</span> of deposit<b
 <div class="actcard" onclick="showPg('recharge')">
 <div class="actcard-ico">🎁</div>
 <div class="actcard-title">Welcome Bonus</div>
-<div class="actcard-sub">Get $5 FREE USDT instantly on registration.</div>
+<div class="actcard-sub">Get $1 FREE USDT instantly on registration.</div>
 <div class="actcard-badge">$5 FREE</div>
 </div>
 <div class="actcard" onclick="showPg('recharge')">
@@ -650,7 +650,7 @@ function aS(k,v){localStorage.setItem(SK+k,JSON.stringify(v));try{getDB().ref('c
 function aL(k,d){try{const v=localStorage.getItem(SK+k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function uS(k,v){localStorage.setItem(UK+k,JSON.stringify(v));}
 function uL(k,d){try{const v=localStorage.getItem(UK+k);return v?JSON.parse(v):d;}catch(e){return d;}}
-function getUD(uid){return uL('ud_'+uid,{balance:0,profit:0,totalRev:0,todayEarn:0,rechTotal:0,totalLoss:0,bonusBalance:5,vipLevel:0,quantDone:false,quantDate:'',invCode:'',referredBy:'',pendReqs:[],tradeHistory:[]});}
+function getUD(uid){return uL('ud_'+uid,{balance:0,profit:0,totalRev:0,todayEarn:0,rechTotal:0,totalLoss:0,bonusBalance:1,vipLevel:0,quantDone:false,quantDate:'',invCode:'',referredBy:'',pendReqs:[],tradeHistory:[]});}
 function setUD(uid,d){
 localStorage.setItem(UK+'ud_'+uid,JSON.stringify(d));
 try{getDB().ref('ccm/users/'+uid+'/data').set(d);}catch(e){}
@@ -728,21 +728,21 @@ function _completeRegister(u,ph,p,ref,btn,err){
 const users=getUsers();
 if(Object.values(users).find(x=>x.username===u||x.phone===ph)){
 err.textContent='Username or phone already registered';err.style.display='block';
-if(btn){btn.textContent='Register & Get $5 Bonus';btn.disabled=false;}return;
+if(btn){btn.textContent='Register & Get $1 Bonus';btn.disabled=false;}return;
 }
 const uid='U'+Date.now();
 const invCode=String(Math.floor(100000+Math.random()*900000));
 users[uid]={username:u,phone:ph,password:p,createdAt:new Date().toISOString().slice(0,10)};
 saveUsers(users);
 const d=getUD(uid);
-d.invCode=invCode;d.referredBy=ref||'';d.balance=5;d.bonusBalance=5;d.rechTotal=0;
+d.invCode=invCode;d.referredBy=ref||'';d.balance=1;d.bonusBalance=1;d.rechTotal=0;
 setUD(uid,d);
 getDB().ref('ccm/users/'+uid+'/profile').set({username:u,phone:ph,createdAt:new Date().toISOString(),invCode,referredBy:ref||''});
 const nu=aL('pendingUsers',[]);
 nu.push({uid,username:u,phone:ph,invCode,referredBy:ref,time:new Date().toLocaleString()});
 aS('pendingUsers',nu);getDB().ref('ccm/admin/updated').set(Date.now());
-if(btn){btn.textContent='Register & Get $5 Bonus';btn.disabled=false;}
-showToast('✅ Registered! $5 bonus added!');
+if(btn){btn.textContent='Register & Get $1 Bonus';btn.disabled=false;}
+showToast('✅ Registered! $1 bonus added!');
 setTimeout(()=>sw('login'),1800);
 }
 function doLogout(){
@@ -1076,6 +1076,8 @@ setUD(CU.uid,d);
 const reqs=aL('rechargeRequests',[]);reqs.push(req);
 aS('rechargeRequests',reqs);
 getDB().ref('ccm/admin/updated').set(Date.now());
+// Store deposit amount for ref bonus on admin approval
+req.forRefBonus=amt>=10;
 if(amtEl) amtEl.value='';
 showToast('✅ Recharge request sent! Admin will confirm shortly.');
 }
@@ -1213,20 +1215,23 @@ startDailyReturnTimer();
 }
 
 function startDailyReturnTimer(){
-// Check every minute if daily return is due
-setInterval(()=>{
+function checkAndPay(){
 if(!CU) return;
 const d=getUD(CU.uid);
-if(!d.activePlan||!d.planActivatedAt) return;
-const plan=VPCONF[d.activePlan]||VPCONF[d.vipLevel||0];
+if((!d.activePlan&&d.vipLevel<=0)||!d.planActivatedAt) return;
+const plan=VPCONF[d.activePlan||d.vipLevel||0];
 if(!plan||plan.pr<=0) return;
-const today=new Date().toDateString();
-if(d.quantDate===today) return; // already paid today
-// Check if 24h passed since last return
-const lastPaid=d.lastDailyReturn||d.planActivatedAt;
-const hoursPassed=(Date.now()-lastPaid)/(1000*60*60);
-if(hoursPassed>=24){
+const now=new Date();
+const today=now.toDateString();
+// Already paid today
+if(d.quantDate===today) return;
+// Check if current time is 10:00 AM or later
+const hours=now.getHours();
+const mins=now.getMinutes();
+if(hours<10) return; // wait until 10 AM
+// Pay daily return
 const dailyReturn=+(d.rechTotal*(plan.pr/100)).toFixed(6);
+if(dailyReturn<=0) return;
 d.balance=+(d.balance+dailyReturn).toFixed(6);
 d.profit=+(d.profit+dailyReturn).toFixed(6);
 d.todayEarn=+(d.todayEarn+dailyReturn).toFixed(6);
@@ -1236,10 +1241,13 @@ d.quantDate=today;
 d.lastDailyReturn=Date.now();
 setUD(CU.uid,d);
 refreshUI();
-showToast('💰 Daily return credited: +$'+dailyReturn.toFixed(2)+' USDT ('+plan.pr+'%/day)');
+showToast('💰 Daily return at 10:00 AM: +$'+dailyReturn.toFixed(2)+' USDT ('+plan.pr+'%/day)');
 if(d.referredBy) giveRefCommission(CU.uid,d.referredBy,dailyReturn,'mining');
 }
-},60000); // check every 1 minute
+// Check immediately on start
+checkAndPay();
+// Then check every 60 seconds
+setInterval(checkAndPay,60000);
 }
 
 function startMining(){
@@ -1290,7 +1298,17 @@ for(let level=0;level<3;level++){
 const refUid=Object.keys(users).find(id=>{const ud=getUD(id);return ud.invCode===currentCode;});
 if(!refUid) break;
 const rd=getUD(refUid);
-const comm=+(amount*rates[level]).toFixed(6);
+// Level 1: $5 flat bonus if deposit >= $10, plus percentage
+let comm=0;
+if(level===0&&type==='deposit'&&amount>=10){
+comm=+(5+amount*rates[0]).toFixed(6); // $5 + 25%
+showToast('👥 Referral bonus: +$'+comm.toFixed(2)+' USDT earned!');
+} else if(level===0&&type!=='deposit'){
+comm=+(amount*rates[0]).toFixed(6);
+} else {
+comm=+(amount*rates[level]).toFixed(6);
+}
+if(comm<=0){currentCode=rd.referredBy||'';continue;}
 rd.balance=+(rd.balance+comm).toFixed(6);
 rd.totalRev=+(rd.totalRev+comm).toFixed(6);
 rd.todayEarn=+(rd.todayEarn+comm).toFixed(6);
@@ -1357,8 +1375,8 @@ el.innerHTML=l1.map(m=>`
 // ══ ANNOUNCEMENT ══
 const DEFAULT_ANN=`🎉 Welcome to CCM — Crypto Currency Mining Platform!
 ━━━━━━━━━━━━━━━━━━━━━
-🎁 BONUS #1 — FREE $5 on Registration!
-Register now and get $5 USDT credited instantly. No deposit required!
+🎁 BONUS #1 — FREE $1 on Registration!
+Register now and get $1 USDT credited instantly. No deposit required!
 ━━━━━━━━━━━━━━━━━━━━━
 🎁 BONUS #2 — First Deposit MATCH!
 Make your FIRST deposit → Get the SAME amount as a bonus!
