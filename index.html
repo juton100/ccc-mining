@@ -388,14 +388,32 @@ Level 3: <span style="color:var(--gold);font-weight:700;">7%</span> of deposit<b
 <div style="width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,.15);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🤖</div>
 <div><div style="font-size:.9rem;font-weight:700;">Android App</div><div style="font-size:.65rem;color:rgba(34,197,94,.8);">Direct install — No Play Store needed</div></div>
 </div>
-<button onclick="doAndroidInstall()" style="width:100%;background:linear-gradient(135deg,#16a34a,#15803d);border:none;border-radius:10px;padding:13px;color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;">⬇ Install Now — Android</button>
+<button onclick="doAndroidInstall()" style="width:100%;background:linear-gradient(135deg,#F7931A,#e8851a);border:none;border-radius:10px;padding:13px;color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+<span style="font-size:1.2rem;">⬇</span> Install App — Android
+</button>
+<div style="margin-top:8px;background:rgba(247,147,26,.06);border:1px solid rgba(247,147,26,.15);border-radius:9px;padding:10px 12px;">
+<div style="font-size:.7rem;color:#8A8A8A;line-height:1.7;">
+1. Chrome menu (⋮) → <b style="color:#fff;">Add to Home Screen</b><br>
+2. Tap <b style="color:#fff;">Add</b> — App installs instantly!<br>
+3. Open from home screen like a native app ✅
+</div>
+</div>
 </div>
 <div style="background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(99,102,241,.04));border:1px solid rgba(99,102,241,.3);border-radius:14px;padding:16px;margin-bottom:10px;">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
 <div style="width:44px;height:44px;border-radius:12px;background:rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🍎</div>
 <div><div style="font-size:.9rem;font-weight:700;">iPhone / iPad App</div><div style="font-size:.65rem;color:rgba(99,102,241,.8);">Free — Works on all iOS devices</div></div>
 </div>
-<button onclick="doIOSInstall()" style="width:100%;background:linear-gradient(135deg,#4f46e5,#3730a3);border:none;border-radius:10px;padding:13px;color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;">⬇ Install Now — iPhone</button>
+<button onclick="doIOSInstall()" style="width:100%;background:linear-gradient(135deg,#4f46e5,#3730a3);border:none;border-radius:10px;padding:13px;color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+<span style="font-size:1.2rem;">⬇</span> Install App — iPhone
+</button>
+<div style="margin-top:8px;background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:9px;padding:10px 12px;">
+<div style="font-size:.7rem;color:#8A8A8A;line-height:1.7;">
+1. Safari Share button (↑) → <b style="color:#fff;">Add to Home Screen</b><br>
+2. Tap <b style="color:#fff;">Add</b> — App installs instantly!<br>
+3. Open from home screen like a native app ✅
+</div>
+</div>
 </div>
 <div style="background:rgba(0,229,181,.04);border:1px solid rgba(0,229,181,.12);border-radius:11px;padding:12px 14px;">
 <div style="font-size:.72rem;color:var(--text2);line-height:1.8;">✅ Free to download &nbsp;|&nbsp; ✅ No storage issues<br>✅ Works offline &nbsp;|&nbsp; ✅ Auto updates</div>
@@ -652,14 +670,22 @@ return v;
 }
 // ══ COINS ══
 const COINS=[
-{s:'BTC',p:96420,c:1.25,vol:'48.2B',bg:'rgba(247,147,26,.15)',co:'#f7931a',b:'rgba(247,147,26,.3)'},
-{s:'ETH',p:3412,c:0.34,vol:'21.3B',bg:'rgba(98,126,234,.15)',co:'#627eea',b:'rgba(98,126,234,.3)'},
-{s:'BNB',p:626,c:-0.36,vol:'2.1B',bg:'rgba(243,186,47,.15)',co:'#f3ba2f',b:'rgba(243,186,47,.3)'},
-{s:'XRP',p:1.4058,c:-0.29,vol:'3.8B',bg:'rgba(0,170,228,.15)',co:'#00aae4',b:'rgba(0,170,228,.3)'},
-{s:'SOL',p:198.5,c:2.11,vol:'8.7B',bg:'rgba(153,69,255,.15)',co:'#9945ff',b:'rgba(153,69,255,.3)'},
-{s:'ADA',p:0.5821,c:-1.02,vol:'1.2B',bg:'rgba(0,51,173,.15)',co:'#0033ad',b:'rgba(0,51,173,.3)'},
-{s:'DOGE',p:0.1823,c:3.45,vol:'2.4B',bg:'rgba(194,163,29,.15)',co:'#c2a31d',b:'rgba(194,163,29,.3)'},
-{s:'DOT',p:8.72,c:-0.88,vol:'0.9B',bg:'rgba(230,0,122,.15)',co:'#e6007a',b:'rgba(230,0,122,.3)'}
+{s:'BTC',p:96420,c:1.25,vol:'48.2B',bg:'#F7931A',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path d="M22.5 14.2c.3-2-1.2-3-3.3-3.7l.7-2.7-1.6-.4-.6 2.6-1.3-.3.6-2.6-1.6-.4-.7 2.7-2.6-.6-.4 1.7s1.2.3 1.1.3c.6.2.7.6.7.9l-1.7 6.8c-.1.2-.3.5-.8.4 0 0-1.1-.3-1.1-.3l-.8 1.8 2.5.6.7-2.7 1.3.3-.7 2.7 1.6.4.7-2.7c2.7.5 4.7.3 5.5-2.1.7-2-0-3.1-1.4-3.8 1-.2 1.7-1 1.9-2.2zm-3.4 4.8c-.5 2-3.9.9-5 .6l.9-3.5c1.1.3 4.7.8 4.1 2.9zm.5-4.8c-.4 1.8-3.3.9-4.2.7l.8-3.2c.9.2 3.8.7 3.4 2.5z" fill="#fff"/></svg>'},
+{s:'ETH',p:3412,c:0.34,vol:'21.3B',bg:'#627EEA',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#627EEA"/><g fill="#fff"><polygon points="16,5 16,20 24,16.5" opacity=".6"/><polygon points="16,5 16,20 8,16.5"/><polygon points="16,22 16,27 24,18" opacity=".6"/><polygon points="16,22 16,27 8,18"/><polygon points="16,20 24,16.5 16,13" opacity=".2"/><polygon points="16,20 8,16.5 16,13" opacity=".6"/></g></svg>'},
+{s:'BNB',p:626,c:-0.36,vol:'2.1B',bg:'#F3BA2F',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F3BA2F"/><g fill="#fff"><polygon points="16,7 20,11 16,15 12,11"/><polygon points="9,14 13,18 9,22 5,18"/><polygon points="23,14 27,18 23,22 19,18"/><polygon points="16,19 20,23 16,27 12,23"/><rect x="13" y="13" width="6" height="6" transform="rotate(45 16 16)"/></g></svg>'},
+{s:'XRP',p:1.4058,c:-0.29,vol:'3.8B',bg:'#00AAE4',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#00AAE4"/><path d="M23 9h3l-6.5 6.5c-1.9 1.9-5.1 1.9-7 0L6 9h3l5 5c1.1 1.1 2.9 1.1 4 0L23 9zm3 14h-3l-5-5c-1.1-1.1-2.9-1.1-4 0l-5 5H6l6.5-6.5c1.9-1.9 5.1-1.9 7 0L26 23z" fill="#fff"/></svg>'},
+{s:'SOL',p:198.5,c:2.11,vol:'8.7B',bg:'#9945FF',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#9945FF"/><g fill="#fff"><rect x="6" y="9" width="18" height="3" rx="1.5"/><rect x="8" y="14.5" width="18" height="3" rx="1.5" transform="skewX(-8)"/><rect x="6" y="20" width="18" height="3" rx="1.5"/></g></svg>'},
+{s:'ADA',p:0.5821,c:-1.02,vol:'1.2B',bg:'#0033AD',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0033AD"/><g fill="#fff" opacity=".9"><circle cx="16" cy="8" r="1.5"/><circle cx="16" cy="24" r="1.5"/><circle cx="8" cy="12" r="1.5"/><circle cx="24" cy="12" r="1.5"/><circle cx="8" cy="20" r="1.5"/><circle cx="24" cy="20" r="1.5"/><circle cx="11" cy="10" r="1.2"/><circle cx="21" cy="10" r="1.2"/><circle cx="11" cy="22" r="1.2"/><circle cx="21" cy="22" r="1.2"/><circle cx="16" cy="16" r="2.5"/></g></svg>'},
+{s:'DOGE',p:0.1823,c:3.45,vol:'2.4B',bg:'#C2A31D',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#C2A31D"/><text x="16" y="22" font-size="16" font-weight="900" fill="#fff" text-anchor="middle">Ð</text></svg>'},
+{s:'AVAX',p:9.1,c:-1.79,vol:'1.1B',bg:'#E84142',
+svg:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#E84142"/><polygon points="16,7 27,25 5,25" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/><polygon points="16,14 21,25 11,25" fill="#fff"/></svg>'},
 ];
 // ══ STORAGE ══
 function getDB(){return window.DB||{ref:()=>({set:()=>Promise.resolve(),once:()=>Promise.resolve({val:()=>null}),on:()=>{},off:()=>{}})}}
@@ -887,8 +913,8 @@ if(coin.c>8) coin.c=8;if(coin.c<-8) coin.c=-8;
 });
 el.innerHTML=COINS.map(coin=>`
 <div class="mktitem">
-<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">
-<div style="width:20px;height:20px;border-radius:50%;background:${coin.bg||'#F7931A'};display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:900;color:#000;flex-shrink:0;">${coin.s.slice(0,3)}</div>
+<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+<div style="width:22px;height:22px;border-radius:50%;overflow:hidden;flex-shrink:0;">${coin.svg||'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="'+coin.bg+'"/></svg>'}</div>
 <div class="mktsym">${coin.s}/USDT</div>
 </div>
 <div class="mktprice">${coin.p>=100?coin.p.toLocaleString(undefined,{maximumFractionDigits:2}):coin.p}</div>
@@ -900,17 +926,21 @@ setInterval(updatePrices,2500);
 }
 // ══ EXCHANGES ══
 // Exchange logos as inline SVG for reliability
-// Inline SVG exchange logos — no external dependency
+// Real Exchange SVG logos
 const EXCHS=[
-{n:'Binance',bg:'#F3BA2F',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#F3BA2F" rx="12"/><g fill="#fff"><polygon points="50,15 62,27 50,39 38,27"/><polygon points="28,37 40,25 52,37 40,49"/><polygon points="72,37 84,25 96,37 84,49" transform="translate(-24,0)"/><polygon points="50,61 62,49 74,61 62,73"/><polygon points="50,61 38,49 26,61 38,73"/><polygon points="50,85 62,73 50,61 38,73"/></g></svg>`},
-{n:'OKX',bg:'#000',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#000" rx="12"/><g fill="#fff"><rect x="20" y="20" width="22" height="22" rx="3"/><rect x="56" y="20" width="22" height="22" rx="3" opacity=".5"/><rect x="38" y="38" width="22" height="22" rx="3"/><rect x="20" y="56" width="22" height="22" rx="3" opacity=".5"/><rect x="56" y="56" width="22" height="22" rx="3"/></g></svg>`},
-{n:'Huobi',bg:'#1A57FF',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#1A57FF" rx="12"/><path d="M50 15 C50 15 70 30 70 50 C70 65 60 78 50 82 C40 78 30 65 30 50 C30 30 50 15 50 15Z" fill="#4FC3F7" opacity="0.9"/><path d="M50 35 C50 35 62 45 62 55 C62 65 57 72 50 75 C43 72 38 65 38 55 C38 45 50 35 50 35Z" fill="#fff" opacity="0.95"/></svg>`},
-{n:'Coinbase',bg:'#0052FF',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#0052FF" rx="12"/><circle cx="50" cy="50" r="32" fill="#fff"/><text x="50" y="62" font-size="36" font-weight="900" fill="#0052FF" font-family="Arial" text-anchor="middle">C</text></svg>`},
-{n:'KuCoin',bg:'#24AE8F',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#24AE8F" rx="12"/><g fill="#fff"><polygon points="50,20 65,35 50,50 35,35"/><polygon points="20,50 35,35 50,50 35,65"/><polygon points="80,50 65,35 50,50 65,65"/><polygon points="50,80 65,65 50,50 35,65"/></g></svg>`},
-{n:'Bybit',bg:'#F7A600',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#F7A600" rx="12"/><text x="50" y="58" font-size="22" font-weight="900" fill="#fff" font-family="Arial" text-anchor="middle">BYBIT</text></svg>`},
-{n:'Gate.io',bg:'#2354E6',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#2354E6" rx="12"/><text x="50" y="46" font-size="18" font-weight="900" fill="#fff" font-family="Arial" text-anchor="middle">GATE</text><text x="50" y="66" font-size="16" font-weight="700" fill="#7DD3FC" font-family="Arial" text-anchor="middle">.IO</text></svg>`},
-{n:'Kraken',bg:'#5741D9',svg:`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#5741D9" rx="12"/><circle cx="50" cy="50" r="28" fill="none" stroke="#fff" stroke-width="6"/><path d="M35 35 L50 50 L35 65 M50 50 L65 35 M50 50 L65 65" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/></svg>`},
+{n:'Binance',bg:'#F3BA2F',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#F3BA2F" rx="16"/><g fill="#fff"><polygon points="50,18 62,30 50,42 38,30"/><polygon points="26,38 38,26 50,38 38,50"/><polygon points="74,38 62,26 50,38 62,50"/><polygon points="50,58 62,46 74,58 62,70"/><polygon points="50,58 38,46 26,58 38,70"/><polygon points="50,82 62,70 50,58 38,70"/></g></svg>`},
+{n:'OKX',bg:'#000',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#000" rx="16"/><g fill="#fff"><rect x="18" y="18" width="24" height="24" rx="4"/><rect x="56" y="18" width="24" height="24" rx="4" opacity=".5"/><rect x="37" y="37" width="24" height="24" rx="4"/><rect x="18" y="56" width="24" height="24" rx="4" opacity=".5"/><rect x="56" y="56" width="24" height="24" rx="4"/></g></svg>`},
+{n:'Huobi',bg:'#1A57FF',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#1A57FF" rx="16"/><path d="M50 15 C50 15 72 32 72 52 C72 68 62 80 50 84 C38 80 28 68 28 52 C28 32 50 15 50 15Z" fill="#4FC3F7" opacity="0.9"/><path d="M50 36 C50 36 64 48 64 58 C64 68 58 76 50 79 C42 76 36 68 36 58 C36 48 50 36 50 36Z" fill="#fff" opacity="0.95"/></svg>`},
+{n:'Coinbase',bg:'#0052FF',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#0052FF" rx="16"/><circle cx="50" cy="50" r="32" fill="#fff"/><text x="50" y="64" font-size="40" font-weight="900" fill="#0052FF" font-family="Arial" text-anchor="middle">C</text></svg>`},
+{n:'KuCoin',bg:'#24AE8F',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#24AE8F" rx="16"/><g fill="#fff"><polygon points="50,18 64,32 50,46 36,32"/><polygon points="18,50 32,36 46,50 32,64"/><polygon points="82,50 68,36 54,50 68,64"/><polygon points="50,82 64,68 50,54 36,68"/></g></svg>`},
+{n:'Bybit',bg:'#F7A600',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#1A1A2E" rx="16"/><text x="50" y="44" font-size="18" font-weight="900" fill="#F7A600" font-family="Arial" text-anchor="middle">BY</text><text x="50" y="66" font-size="18" font-weight="900" fill="#fff" font-family="Arial" text-anchor="middle">BIT</text></svg>`},
+{n:'Gate.io',bg:'#2354E6',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#2354E6" rx="16"/><text x="50" y="44" font-size="22" font-weight="900" fill="#fff" font-family="Arial" text-anchor="middle">GATE</text><text x="50" y="68" font-size="18" font-weight="700" fill="#7DD3FC" font-family="Arial" text-anchor="middle">.IO</text></svg>`},
+{n:'Kraken',bg:'#5741D9',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#5741D9" rx="16"/><circle cx="50" cy="50" r="28" fill="none" stroke="#fff" stroke-width="6"/><path d="M34 34 L50 50 L34 66 M50 50 L66 34 M50 50 L66 66" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/></svg>`},
+{n:'Bitget',bg:'#00F0FF',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#0A0E1A" rx="16"/><polygon points="25,72 50,18 75,72" fill="none" stroke="#00F0FF" stroke-width="8" stroke-linejoin="round"/><line x1="35" y1="55" x2="65" y2="55" stroke="#00F0FF" stroke-width="8" stroke-linecap="round"/></svg>`},
+{n:'Bitstamp',bg:'#00923F',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#00923F" rx="16"/><text x="50" y="62" font-size="45" font-weight="900" fill="#fff" font-family="serif" text-anchor="middle">₿</text></svg>`},
+{n:'Bitfinex',bg:'#16B157',svg:`<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#16B157" rx="16"/><text x="50" y="44" font-size="18" font-weight="900" fill="#fff" font-family="Arial" text-anchor="middle">BIT</text><text x="50" y="66" font-size="14" font-weight="700" fill="#7FFFD4" font-family="Arial" text-anchor="middle">FINEX</text></svg>`},
 ];
+// Old EXCHS list ends
 function renderExchanges(){
 const el=document.getElementById('exchGrid');if(!el) return;
 el.innerHTML=EXCHS.map(e=>`
@@ -922,7 +952,75 @@ el.innerHTML=EXCHS.map(e=>`
 </div>`).join('');
 }
 // ══ VIP / MINING PLANS ══
+const ALL_PLAN_MACHINES=[
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#0a0a0a"/><rect x="60" y="20" width="160" height="100" rx="10" fill="#1a1a1a" stroke="rgba(247,147,26,.3)" stroke-width="1"/><rect x="70" y="30" width="65" height="80" rx="6" fill="#111"/><circle cx="102" cy="70" r="28" fill="none" stroke="#F7931A" stroke-width="2.5" opacity=".8"/><circle cx="102" cy="70" r="12" fill="#F7931A" opacity=".9"/><line x1="102" y1="42" x2="102" y2="58" stroke="#F7931A" stroke-width="2.5"/><line x1="102" y1="82" x2="102" y2="98" stroke="#F7931A" stroke-width="2.5"/><line x1="74" y1="70" x2="90" y2="70" stroke="#F7931A" stroke-width="2.5"/><line x1="114" y1="70" x2="130" y2="70" stroke="#F7931A" stroke-width="2.5"/><rect x="145" y="32" width="65" height="9" rx="3" fill="#F7931A" opacity=".25"/><rect x="145" y="47" width="65" height="9" rx="3" fill="#F7931A" opacity=".25"/><rect x="145" y="62" width="65" height="9" rx="3" fill="#F7931A" opacity=".25"/><rect x="145" y="77" width="65" height="9" rx="3" fill="#F7931A" opacity=".25"/><rect x="145" y="92" width="65" height="9" rx="3" fill="#F7931A" opacity=".25"/><circle cx="225" cy="28" r="5" fill="#22c55e"/><rect x="60" y="108" width="160" height="12" rx="3" fill="#F7931A" opacity=".15"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#0a0a0a"/><rect x="40" y="15" width="200" height="110" rx="10" fill="#1a1a1a" stroke="rgba(247,147,26,.3)" stroke-width="1.5"/><rect x="50" y="25" width="70" height="90" rx="6" fill="#111"/><circle cx="85" cy="70" r="32" fill="none" stroke="#F7931A" stroke-width="3"/><circle cx="85" cy="70" r="14" fill="#F7931A"/><text x="85" y="75" font-size="12" fill="#000" text-anchor="middle" font-weight="900">⛏</text><rect x="130" y="25" width="70" height="90" rx="6" fill="#111"/><circle cx="165" cy="70" r="32" fill="none" stroke="#F7931A" stroke-width="3"/><circle cx="165" cy="70" r="14" fill="#F7931A"/><text x="165" y="75" font-size="12" fill="#000" text-anchor="middle" font-weight="900">⛏</text><rect x="208" y="25" width="22" height="90" rx="4" fill="#0d0d0d" stroke="#333"/><rect x="211" y="32" width="16" height="5" rx="1" fill="#F7931A" opacity=".6"/><rect x="211" y="43" width="16" height="5" rx="1" fill="#F7931A" opacity=".6"/><rect x="211" y="54" width="16" height="5" rx="1" fill="#22c55e" opacity=".6"/><rect x="211" y="65" width="16" height="5" rx="1" fill="#F7931A" opacity=".6"/><rect x="211" y="76" width="16" height="5" rx="1" fill="#F7931A" opacity=".6"/><circle cx="257" cy="22" r="5" fill="#22c55e"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#0a0a0a"/><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a0f00"/><stop offset="100%" stop-color="#1a1a1a"/></linearGradient></defs><rect x="20" y="10" width="240" height="120" rx="12" fill="url(#g3)" stroke="#F7931A" stroke-width="1.5"/><rect x="30" y="20" width="52" height="100" rx="6" fill="#0d0d0d"/><circle cx="56" cy="70" r="22" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="56" cy="70" r="9" fill="#F7931A" opacity=".9"/><rect x="92" y="20" width="52" height="100" rx="6" fill="#0d0d0d"/><circle cx="118" cy="70" r="22" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="118" cy="70" r="9" fill="#F7931A" opacity=".9"/><rect x="154" y="20" width="52" height="100" rx="6" fill="#0d0d0d"/><circle cx="180" cy="70" r="22" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="180" cy="70" r="9" fill="#F7931A" opacity=".9"/><rect x="216" y="20" width="34" height="100" rx="4" fill="#0d0d0d"/><rect x="220" y="28" width="26" height="6" rx="2" fill="#F7931A" opacity=".5"/><rect x="220" y="40" width="26" height="6" rx="2" fill="#F7931A" opacity=".5"/><rect x="220" y="52" width="26" height="6" rx="2" fill="#22c55e" opacity=".7"/><rect x="220" y="64" width="26" height="6" rx="2" fill="#F7931A" opacity=".5"/><rect x="220" y="76" width="26" height="6" rx="2" fill="#F7931A" opacity=".5"/><rect x="220" y="88" width="26" height="6" rx="2" fill="#F7931A" opacity=".5"/><circle cx="264" cy="18" r="6" fill="#22c55e"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#0a0a0a"/><rect x="15" y="8" width="250" height="124" rx="10" fill="#111" stroke="rgba(247,147,26,.4)" stroke-width="1.5"/><rect x="25" y="18" width="230" height="22" rx="4" fill="#1a1a1a" stroke="rgba(247,147,26,.2)"/><circle cx="40" cy="29" r="7" fill="#F7931A" opacity=".8"/><rect x="55" y="23" width="150" height="12" rx="2" fill="rgba(247,147,26,.1)"/><circle cx="248" cy="29" r="5" fill="#22c55e"/><rect x="25" y="46" width="230" height="22" rx="4" fill="#1a1a1a" stroke="rgba(247,147,26,.2)"/><circle cx="40" cy="57" r="7" fill="#F7931A" opacity=".8"/><rect x="55" y="51" width="150" height="12" rx="2" fill="rgba(247,147,26,.1)"/><circle cx="248" cy="57" r="5" fill="#22c55e"/><rect x="25" y="74" width="230" height="22" rx="4" fill="#1a1a1a" stroke="rgba(247,147,26,.2)"/><circle cx="40" cy="85" r="7" fill="#F7931A" opacity=".9"/><rect x="55" y="79" width="150" height="12" rx="2" fill="rgba(247,147,26,.15)"/><circle cx="248" cy="85" r="5" fill="#22c55e"/><rect x="25" y="102" width="230" height="22" rx="4" fill="#1a1a1a" stroke="rgba(247,147,26,.2)"/><circle cx="40" cy="113" r="7" fill="#F7931A" opacity=".8"/><rect x="55" y="107" width="150" height="12" rx="2" fill="rgba(247,147,26,.1)"/><circle cx="248" cy="113" r="5" fill="#F7931A" opacity=".7"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#050505"/><defs><linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a0800"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient></defs><rect x="10" y="5" width="260" height="130" rx="14" fill="url(#g5)" stroke="#F7931A" stroke-width="2"/><rect x="20" y="15" width="45" height="110" rx="8" fill="#111"/><circle cx="42" cy="70" r="20" fill="none" stroke="#F7931A" stroke-width="2.5" opacity=".9"/><circle cx="42" cy="70" r="8" fill="#F7931A"/><rect x="75" y="15" width="45" height="110" rx="8" fill="#111"/><circle cx="97" cy="70" r="20" fill="none" stroke="#F7931A" stroke-width="2.5" opacity=".9"/><circle cx="97" cy="70" r="8" fill="#F7931A"/><rect x="130" y="15" width="45" height="110" rx="8" fill="#111"/><circle cx="152" cy="70" r="20" fill="none" stroke="#F7931A" stroke-width="2.5" opacity=".9"/><circle cx="152" cy="70" r="8" fill="#F7931A"/><rect x="185" y="15" width="45" height="110" rx="8" fill="#111"/><circle cx="207" cy="70" r="20" fill="none" stroke="#F7931A" stroke-width="2.5" opacity=".9"/><circle cx="207" cy="70" r="8" fill="#F7931A"/><rect x="238" y="15" width="32" height="110" rx="6" fill="#0d0d0d"/><rect x="242" y="22" width="24" height="5" rx="2" fill="#F7931A" opacity=".7"/><rect x="242" y="33" width="24" height="5" rx="2" fill="#22c55e" opacity=".8"/><rect x="242" y="44" width="24" height="5" rx="2" fill="#F7931A" opacity=".7"/><rect x="242" y="55" width="24" height="5" rx="2" fill="#F7931A" opacity=".7"/><circle cx="268" cy="12" r="6" fill="#22c55e"/><rect x="10" y="120" width="260" height="4" rx="2" fill="#F7931A" opacity=".3"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#050505"/><rect x="5" y="5" width="270" height="130" rx="14" fill="#0f0f0f" stroke="#F7931A" stroke-width="2"/><rect x="5" y="5" width="270" height="3" rx="1" fill="#F7931A" opacity=".6"/><rect x="15" y="15" width="38" height="110" rx="7" fill="#141414"/><circle cx="34" cy="50" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="34" cy="50" r="6" fill="#F7931A"/><circle cx="34" cy="90" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="34" cy="90" r="6" fill="#F7931A"/><rect x="63" y="15" width="38" height="110" rx="7" fill="#141414"/><circle cx="82" cy="50" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="82" cy="50" r="6" fill="#F7931A"/><circle cx="82" cy="90" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="82" cy="90" r="6" fill="#F7931A"/><rect x="111" y="15" width="38" height="110" rx="7" fill="#141414"/><circle cx="130" cy="50" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="130" cy="50" r="6" fill="#F7931A"/><circle cx="130" cy="90" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="130" cy="90" r="6" fill="#F7931A"/><rect x="159" y="15" width="38" height="110" rx="7" fill="#141414"/><circle cx="178" cy="50" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="178" cy="50" r="6" fill="#F7931A"/><circle cx="178" cy="90" r="16" fill="none" stroke="#F7931A" stroke-width="2"/><circle cx="178" cy="90" r="6" fill="#F7931A"/><rect x="207" y="15" width="63" height="110" rx="7" fill="#141414"/><rect x="215" y="22" width="47" height="8" rx="3" fill="#F7931A" opacity=".4"/><rect x="215" y="36" width="47" height="8" rx="3" fill="#F7931A" opacity=".4"/><rect x="215" y="50" width="47" height="8" rx="3" fill="#22c55e" opacity=".5"/><rect x="215" y="64" width="47" height="8" rx="3" fill="#F7931A" opacity=".4"/><rect x="215" y="78" width="47" height="8" rx="3" fill="#F7931A" opacity=".4"/><rect x="215" y="92" width="47" height="8" rx="3" fill="#F7931A" opacity=".4"/><circle cx="268" cy="12" r="7" fill="#22c55e"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://0.w3.org/2000/svg"><rect width="280" height="140" fill="#030303"/><defs><linearGradient id="g7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a0800"/><stop offset="100%" stop-color="#0d0d0d"/></linearGradient></defs><rect x="3" y="3" width="274" height="134" rx="14" fill="url(#g7)" stroke="#F7931A" stroke-width="2.5"/><rect x="3" y="3" width="274" height="4" rx="2" fill="linear-gradient(90deg,#F7931A,#FFB347)"/><g opacity=".9"><rect x="12" y="12" width="36" height="116" rx="7" fill="#111"/><circle cx="30" cy="45" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="30" cy="45" r="5" fill="#F7931A"/><circle cx="30" cy="85" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="30" cy="85" r="5" fill="#F7931A"/><rect x="54" y="12" width="36" height="116" rx="7" fill="#111"/><circle cx="72" cy="45" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="72" cy="45" r="5" fill="#F7931A"/><circle cx="72" cy="85" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="72" cy="85" r="5" fill="#F7931A"/><rect x="96" y="12" width="36" height="116" rx="7" fill="#111"/><circle cx="114" cy="45" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="114" cy="45" r="5" fill="#F7931A"/><circle cx="114" cy="85" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="114" cy="85" r="5" fill="#F7931A"/><rect x="138" y="12" width="36" height="116" rx="7" fill="#111"/><circle cx="156" cy="45" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="156" cy="45" r="5" fill="#F7931A"/><circle cx="156" cy="85" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="156" cy="85" r="5" fill="#F7931A"/><rect x="180" y="12" width="36" height="116" rx="7" fill="#111"/><circle cx="198" cy="45" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="198" cy="45" r="5" fill="#F7931A"/><circle cx="198" cy="85" r="14" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="198" cy="85" r="5" fill="#F7931A"/></g><rect x="222" y="12" width="50" height="116" rx="7" fill="#0d0d0d"/><rect x="228" y="20" width="38" height="7" rx="2" fill="#F7931A" opacity=".6"/><rect x="228" y="33" width="38" height="7" rx="2" fill="#22c55e" opacity=".7"/><rect x="228" y="46" width="38" height="7" rx="2" fill="#F7931A" opacity=".6"/><rect x="228" y="59" width="38" height="7" rx="2" fill="#F7931A" opacity=".6"/><circle cx="270" cy="10" r="7" fill="#22c55e"/></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#020202"/><defs><linearGradient id="g8"><stop offset="0%" stop-color="#1f0d00"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient></defs><rect x="2" y="2" width="276" height="136" rx="14" fill="url(#g8)" stroke="#F7931A" stroke-width="3"/><rect x="2" y="2" width="276" height="5" rx="2" fill="#F7931A" opacity=".8"/><rect x="2" y="133" width="276" height="5" rx="2" fill="#F7931A" opacity=".4"/><g><rect x="10" y="10" width="32" height="120" rx="6" fill="#141414"/><circle cx="26" cy="40" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="26" cy="40" r="5" fill="#F7931A"/><circle cx="26" cy="70" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="26" cy="70" r="5" fill="#F7931A"/><circle cx="26" cy="100" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="26" cy="100" r="5" fill="#F7931A"/><rect x="48" y="10" width="32" height="120" rx="6" fill="#141414"/><circle cx="64" cy="40" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="64" cy="40" r="5" fill="#F7931A"/><circle cx="64" cy="70" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="64" cy="70" r="5" fill="#F7931A"/><circle cx="64" cy="100" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="64" cy="100" r="5" fill="#F7931A"/><rect x="86" y="10" width="32" height="120" rx="6" fill="#141414"/><circle cx="102" cy="40" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="102" cy="40" r="5" fill="#F7931A"/><circle cx="102" cy="70" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="102" cy="70" r="5" fill="#F7931A"/><circle cx="102" cy="100" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="102" cy="100" r="5" fill="#F7931A"/><rect x="124" y="10" width="32" height="120" rx="6" fill="#141414"/><circle cx="140" cy="40" r="12" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="140" cy="40" r="5" fill="#FFD700"/><circle cx="140" cy="70" r="12" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="140" cy="70" r="5" fill="#FFD700"/><circle cx="140" cy="100" r="12" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="140" cy="100" r="5" fill="#FFD700"/><rect x="162" y="10" width="32" height="120" rx="6" fill="#141414"/><circle cx="178" cy="40" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="178" cy="40" r="5" fill="#F7931A"/><circle cx="178" cy="70" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="178" cy="70" r="5" fill="#F7931A"/><circle cx="178" cy="100" r="12" fill="none" stroke="#F7931A" stroke-width="2.5"/><circle cx="178" cy="100" r="5" fill="#F7931A"/></g><rect x="200" y="10" width="70" height="120" rx="7" fill="#0d0d0d"/><rect x="206" y="18" width="58" height="8" rx="3" fill="#F7931A" opacity=".6"/><rect x="206" y="32" width="58" height="8" rx="3" fill="#22c55e" opacity=".8"/><rect x="206" y="46" width="58" height="8" rx="3" fill="#F7931A" opacity=".6"/><rect x="206" y="60" width="58" height="8" rx="3" fill="#F7931A" opacity=".6"/><rect x="206" y="74" width="58" height="8" rx="3" fill="#22c55e" opacity=".6"/><circle cx="275" cy="10" r="7" fill="#22c55e"/><text x="235" y="108" font-size="10" fill="#FFD700" text-anchor="middle" font-weight="700">MASTER</text></svg>`,
+  `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#010101"/><defs><radialGradient id="g9" cx="50%" cy="50%"><stop offset="0%" stop-color="#2a1000"/><stop offset="100%" stop-color="#080808"/></radialGradient></defs><rect x="1" y="1" width="278" height="138" rx="14" fill="url(#g9)" stroke="#FFD700" stroke-width="3"/><rect x="1" y="1" width="278" height="5" fill="#FFD700" rx="2" opacity=".9"/><rect x="1" y="134" width="278" height="5" fill="#FFD700" rx="2" opacity=".6"/><g opacity=".95"><rect x="8" y="10" width="28" height="120" rx="6" fill="#1a1a1a"/><circle cx="22" cy="38" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="22" cy="38" r="4.5" fill="#FFD700"/><circle cx="22" cy="65" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="22" cy="65" r="4.5" fill="#FFD700"/><circle cx="22" cy="92" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="22" cy="92" r="4.5" fill="#FFD700"/><rect x="42" y="10" width="28" height="120" rx="6" fill="#1a1a1a"/><circle cx="56" cy="38" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="56" cy="38" r="4.5" fill="#FFD700"/><circle cx="56" cy="65" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="56" cy="65" r="4.5" fill="#FFD700"/><circle cx="56" cy="92" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="56" cy="92" r="4.5" fill="#FFD700"/><rect x="76" y="10" width="28" height="120" rx="6" fill="#1a1a1a"/><circle cx="90" cy="38" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="90" cy="38" r="4.5" fill="#FFD700"/><circle cx="90" cy="65" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="90" cy="65" r="4.5" fill="#FFD700"/><circle cx="90" cy="92" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="90" cy="92" r="4.5" fill="#FFD700"/><rect x="110" y="10" width="28" height="120" rx="6" fill="#1a1a1a"/><circle cx="124" cy="38" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="124" cy="38" r="4.5" fill="#FFD700"/><circle cx="124" cy="65" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="124" cy="65" r="4.5" fill="#FFD700"/><circle cx="124" cy="92" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="124" cy="92" r="4.5" fill="#FFD700"/><rect x="144" y="10" width="28" height="120" rx="6" fill="#1a1a1a"/><circle cx="158" cy="38" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="158" cy="38" r="4.5" fill="#FFD700"/><circle cx="158" cy="65" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="158" cy="65" r="4.5" fill="#FFD700"/><circle cx="158" cy="92" r="11" fill="none" stroke="#FFD700" stroke-width="2.5"/><circle cx="158" cy="92" r="4.5" fill="#FFD700"/></g><rect x="178" y="10" width="92" height="120" rx="8" fill="#111"/><rect x="184" y="18" width="80" height="9" rx="3" fill="#FFD700" opacity=".7"/><rect x="184" y="33" width="80" height="9" rx="3" fill="#22c55e" opacity=".8"/><rect x="184" y="48" width="80" height="9" rx="3" fill="#FFD700" opacity=".7"/><rect x="184" y="63" width="80" height="9" rx="3" fill="#FFD700" opacity=".7"/><rect x="184" y="78" width="80" height="9" rx="3" fill="#22c55e" opacity=".8"/><rect x="184" y="93" width="80" height="9" rx="3" fill="#FFD700" opacity=".7"/><circle cx="272" cy="8" r="8" fill="#22c55e"/><text x="224" y="118" font-size="11" fill="#FFD700" text-anchor="middle" font-weight="900">⚡ ELITE</text></svg>`,
+];
+
 function renderVIP(){
+const el=document.getElementById('vipGrid');if(!el) return;
+const curVip=CU?getVIP(getUD(CU.uid).rechTotal||0):0;
+const plans=VPCONF.filter(v=>v.l>0);
+el.innerHTML=plans.map((v,idx)=>{
+const isActive=curVip===v.l;
+const daily=+(v.mn*v.pr/100).toFixed(2);
+const totalRet=+(daily*30).toFixed(0);
+const roi=(v.pr*30).toFixed(0);
+const machine=ALL_PLAN_MACHINES[idx]||ALL_PLAN_MACHINES[0];
+const isBest=v.l===7||v.l===8;
+const isElite=v.l===9;
+return`<div style="background:#0d0d0d;border:${isElite?'2px solid #FFD700':isActive?'2px solid #F7931A':'1px solid rgba(247,147,26,.15)'};border-radius:18px;overflow:hidden;position:relative;margin-bottom:2px;">
+${isElite?'<div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FFD700,#F7931A,#FFD700);z-index:2;"></div>':''}
+${isBest&&!isElite?'<div style="position:absolute;top:10px;left:10px;background:#F7931A;color:#000;font-size:.58rem;font-weight:900;padding:3px 8px;border-radius:4px;z-index:2;">🔥 POPULAR</div>':''}
+${isElite?'<div style="position:absolute;top:10px;left:10px;background:linear-gradient(135deg,#FFD700,#F7931A);color:#000;font-size:.58rem;font-weight:900;padding:3px 10px;border-radius:4px;z-index:2;">👑 ELITE</div>':''}
+${isActive?'<div style="position:absolute;top:10px;right:10px;background:#22c55e;color:#fff;font-size:.58rem;font-weight:800;padding:3px 8px;border-radius:4px;z-index:2;">● MINING</div>':''}
+<!-- Machine SVG -->
+<div style="background:linear-gradient(135deg,#0a0500,#111);padding:12px 10px 6px;width:100%;overflow:hidden;">
+${machine}
+</div>
+<!-- Plan details -->
+<div style="padding:12px 14px 14px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+<div>
+<div style="font-size:1.1rem;font-weight:900;color:#fff;">M${v.l} <span style="font-size:.7rem;color:#8A8A8A;font-weight:400;">${v.label}</span></div>
+</div>
+<div style="text-align:right;">
+<div style="font-size:1.1rem;font-weight:900;color:${isElite?'#FFD700':'#F7931A'};">${v.mn}.00 USDT</div>
+</div>
+</div>
+<div style="background:rgba(255,255,255,.03);border-radius:10px;padding:10px 12px;margin-bottom:10px;">
+<div style="display:flex;justify-content:space-between;font-size:.78rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+<span style="color:#8A8A8A;">Daily Reward</span>
+<span style="color:#22c55e;font-weight:700;">USDT ${daily}</span>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:.78rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+<span style="color:#8A8A8A;">Valid Days</span>
+<span style="color:#22c55e;font-weight:700;">30 Days</span>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:.78rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+<span style="color:#8A8A8A;">30-Day Return</span>
+<span style="color:#fff;font-weight:700;">${totalRet} USDT</span>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:.78rem;padding:4px 0;">
+<span style="color:#8A8A8A;">ROI</span>
+<span style="color:${isElite?'#FFD700':'#F7931A'};font-weight:800;">${roi}%</span>
+</div>
+</div>
+<button onclick="activateMiningPlan(${v.l})" style="width:100%;background:${isActive?'rgba(34,197,94,.15)':isElite?'linear-gradient(135deg,#FFD700,#F7931A)':'linear-gradient(135deg,#F7931A,#e8851a)'};border:${isActive?'1px solid #22c55e':'none'};border-radius:11px;padding:13px;color:${isActive?'#22c55e':'#000'};font-size:.9rem;font-weight:900;cursor:pointer;letter-spacing:.5px;">
+${isActive?'✅ Mining Active':'🚀 Rent Now — Start Earning'}
+</button>
+</div>
+</div>`;
+}).join('');
+}
+function _old_renderVIP_replaced(){
 const el=document.getElementById('vipGrid');if(!el) return;
 const curVip=CU?getVIP(getUD(CU.uid).rechTotal||0):0;
 const plans=VPCONF.filter(v=>v.l>0).slice(0,3);
@@ -1210,43 +1308,43 @@ function activateMiningPlan(level){
 if(!CU){showToast('Please login first');return;}
 const d=getUD(CU.uid);
 const plan=VPCONF[level];
-// Check if already active
-if(d.vipLevel===level&&d.activePlan){
-showToast('✅ VIP'+level+' already active! Earning '+plan.pr+'%/day');return;
+if(!plan){return;}
+if(d.activePlan===level){
+showToast('✅ M'+level+' already active! Earning $'+(plan.mn*plan.pr/100).toFixed(2)+'/day');return;
 }
 if((d.balance||0)<plan.mn){
 showToast('⚠️ Need $'+plan.mn+' USDT. Please recharge!');
 setTimeout(()=>showPg('recharge'),1500);return;
 }
-// Deduct plan cost & activate immediately
+// Deduct plan price immediately
 d.balance=+(d.balance-plan.mn).toFixed(6);
 d.rechTotal=+(d.rechTotal+plan.mn).toFixed(6);
 d.vipLevel=getVIP(d.rechTotal);
 d.activePlan=level;
 d.planActivatedAt=Date.now();
-d.planExpiry=Date.now()+(30*24*60*60*1000); // 30 days
+d.planExpiry=Date.now()+(30*24*60*60*1000);
 d.quantDone=false;
 d.quantDate='';
-d.lastDailyReturn=0;
+d.lastDailyReturn=Date.now();
 setUD(CU.uid,d);
-refreshUI();renderVIP();renderVIP2();
-// Immediately give first return
-const firstReturn=+(plan.mn*(plan.pr/100)).toFixed(6);
+refreshUI();renderVIP();
+// First daily return immediately
+const dailyReturn=+(plan.mn*(plan.pr/100)).toFixed(6);
 setTimeout(()=>{
 const d2=getUD(CU.uid);
-d2.balance=+(d2.balance+firstReturn).toFixed(6);
-d2.profit=+(d2.profit+firstReturn).toFixed(6);
-d2.todayEarn=+(d2.todayEarn+firstReturn).toFixed(6);
-d2.totalRev=+(d2.totalRev+firstReturn).toFixed(6);
+d2.balance=+(d2.balance+dailyReturn).toFixed(6);
+d2.profit=+(d2.profit+dailyReturn).toFixed(6);
+d2.todayEarn=+(d2.todayEarn+dailyReturn).toFixed(6);
+d2.totalRev=+(d2.totalRev+dailyReturn).toFixed(6);
 d2.quantDone=true;
 d2.quantDate=new Date().toDateString();
+d2.lastDailyReturn=Date.now();
 setUD(CU.uid,d2);
 refreshUI();
-showToast('⛏️ Mining active! First return: +$'+firstReturn.toFixed(2)+' USDT earned!');
-if(d2.referredBy) giveRefCommission(CU.uid,d2.referredBy,firstReturn,'mining');
-},1500);
-showToast('✅ VIP'+level+' activated! $'+plan.mn+' invested. Starting mining...');
-// Set up daily auto-return checker
+showToast('💰 M'+level+' activated! +$'+dailyReturn.toFixed(2)+' USDT earned today!');
+if(d2.referredBy) giveRefCommission(CU.uid,d2.referredBy,dailyReturn,'mining');
+},1200);
+showToast('🚀 M'+level+' purchased! $'+plan.mn+' invested. Mining started!');
 startDailyReturnTimer();
 }
 
