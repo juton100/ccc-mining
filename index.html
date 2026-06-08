@@ -75,7 +75,7 @@ body{background:#0a0a0a;display:flex;align-items:center;justify-content:center;m
 </div>
 <div class="ticons">
 <span class="tbal" id="topBal" onclick="showPg('home')">0.00 USDT</span>
-<div class="tico" onclick="openChat()">💬</div>
+<div id="currencyToggle" onclick="toggleCurrency()" style="font-size:.62rem;font-weight:800;padding:4px 8px;background:rgba(247,147,26,.12);border:1px solid rgba(247,147,26,.3);border-radius:6px;color:#F7931A;cursor:pointer;">৳ BDT</div><div class="tico" onclick="openChat()">💬</div>
 <div class="tico" onclick="showPg('me')">👤</div>
 </div>
 </div>
@@ -283,7 +283,7 @@ body{background:#0a0a0a;display:flex;align-items:center;justify-content:center;m
 </div>
 </div>
 <div style="font-size:.75rem;color:var(--text2);text-align:center;padding:8px 0 4px;">Mining plans — higher VIP = higher daily return</div>
-<div class="vipgrid" id="vipGrid2" style="padding:0;"></div>
+<div id="vipGrid2" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0;"></div>
 </div>
 </div>
 <div class="pg" id="pg-recharge">
@@ -388,14 +388,16 @@ Level 3: <span style="color:var(--gold);font-weight:700;">7%</span> of deposit<b
 <div style="width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,.15);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🤖</div>
 <div><div style="font-size:.9rem;font-weight:700;">Android App</div><div style="font-size:.65rem;color:rgba(34,197,94,.8);">Direct install — No Play Store needed</div></div>
 </div>
-<button onclick="doAndroidInstall()" style="width:100%;background:linear-gradient(135deg,#F7931A,#e8851a);border:none;border-radius:10px;padding:13px;color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-<span style="font-size:1.2rem;">⬇</span> Install App — Android
+<button onclick="doAndroidInstall()" style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:10px;padding:13px;color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;">
+🤖 Android — Step by Step
 </button>
-<div style="margin-top:8px;background:rgba(247,147,26,.06);border:1px solid rgba(247,147,26,.15);border-radius:9px;padding:10px 12px;">
-<div style="font-size:.7rem;color:#8A8A8A;line-height:1.7;">
-1. Chrome menu (⋮) → <b style="color:#fff;">Add to Home Screen</b><br>
-2. Tap <b style="color:#fff;">Add</b> — App installs instantly!<br>
-3. Open from home screen like a native app ✅
+<div style="margin-top:8px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:9px;padding:12px;">
+<div style="font-size:.75rem;color:#fff;line-height:2.2;">
+<b style="color:#22c55e;">Step 1:</b> Open this site in <b>Chrome</b> browser<br>
+<b style="color:#22c55e;">Step 2:</b> Tap <b>⋮ menu</b> (top right)<br>
+<b style="color:#22c55e;">Step 3:</b> Tap <b>"Add to Home Screen"</b><br>
+<b style="color:#22c55e;">Step 4:</b> Tap <b>"Add"</b> → Done! ✅<br>
+<span style="font-size:.65rem;color:#8A8A8A;">App will appear on your home screen like WhatsApp</span>
 </div>
 </div>
 </div>
@@ -647,6 +649,20 @@ Level 3: <span style="color:var(--gold);font-weight:700;">7%</span> of deposit<b
 <script>
 // ══ CONFIG ══
 const SK='ccm_admin_';
+const BDT_RATE=110; // 1 USD = 110 BDT (approximate)
+let currentCurrency='USDT'; // 'USDT' or 'BDT'
+function usdToBdt(usd){return (usd*BDT_RATE).toFixed(0);}
+function bdtToUsd(bdt){return (bdt/BDT_RATE).toFixed(6);}
+function fmtAmt(usd){
+  if(currentCurrency==='BDT') return '৳'+usdToBdt(usd);
+  return '$'+parseFloat(usd).toFixed(2);
+}
+function toggleCurrency(){
+  currentCurrency=currentCurrency==='USDT'?'BDT':'USDT';
+  const btn=document.getElementById('currencyToggle');
+  if(btn) btn.textContent=currentCurrency==='USDT'?'৳ BDT':'$ USDT';
+  refreshUI();
+}
 const UK='ccm_user_';
 const SITE_URL=window.location.origin+window.location.pathname.replace('index.html','');
 const SUPPORT_EMAIL='cryptominingplatform920@gmail.com';
@@ -1648,7 +1664,7 @@ ${[5,10,50,100,500].map(a=>`<span onclick="setCTBet(${a},this)" style="padding:6
 ctBet=5;startCTTimer();
 }
 function setCTBet(a,el){
-ctBet=a;document.getElementById('ctBetInput').value=a;
+ctBet=a;document.getElementById('ctBetInput').value=currentCurrency==='BDT'?Math.round(a*BDT_RATE):a;
 document.querySelectorAll('#ctPage .ct-btns~*').forEach(()=>{});
 el.parentElement.querySelectorAll('span').forEach(x=>{x.style.background='rgba(255,255,255,.05)';x.style.color='var(--text2)';x.style.borderColor='var(--border)';});
 el.style.background='rgba(139,92,246,.2)';el.style.color='#a78bfa';el.style.borderColor='rgba(139,92,246,.4)';
@@ -1683,7 +1699,8 @@ settleCTRound();
 function placeCT(color){
 if(!CU){showToast('Please login');return;}
 const amt=parseFloat(document.getElementById('ctBetInput').value)||0;
-if(amt<1){showToast('⚠️ Minimum $1');return;}
+const minUsd=currentCurrency==='BDT'?+(50/BDT_RATE).toFixed(4):1;
+if(amt<minUsd){showToast('⚠️ Minimum '+(currentCurrency==='BDT'?'৳50 BDT':'$1 USDT'));return;}
 const d=getUD(CU.uid);
 if((d.balance||0)<amt){showToast('⚠️ Insufficient balance');return;}
 d.balance=+(d.balance-amt).toFixed(6);setUD(CU.uid,d);
@@ -1773,6 +1790,13 @@ if(el) el.classList.add('active');
 const pd=document.getElementById('btPayoutDisplay');if(pd) pd.textContent=Math.round(btPayout*100)+'%';
 startBTTimer();updateBTEst();
 }
+function setBTAmtSmart(bdtAmt,el){
+  const usdAmt=currentCurrency==='BDT'?+(bdtAmt/BDT_RATE).toFixed(4):bdtAmt;
+  document.getElementById('btAmt').value=usdAmt;
+  document.querySelectorAll('#btAmtBtns .bt-amtbtn').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  updateBTEst();
+}
 function setBTAmt(a,el){
 document.getElementById('btAmt').value=a;
 document.querySelectorAll('#btAmtBtns .bt-amtbtn').forEach(x=>x.classList.remove('active'));
@@ -1803,7 +1827,8 @@ if(t<=0){t=btExpiry;btRound++;const rn=document.getElementById('btRound');if(rn)
 function placeBT(dir){
 if(!CU){showToast('Please login');return;}
 const amt=parseFloat(document.getElementById('btAmt').value)||0;
-if(amt<1){showToast('⚠️ Minimum $1');return;}
+const minUsd=currentCurrency==='BDT'?+(50/BDT_RATE).toFixed(4):1;
+if(amt<minUsd){showToast('⚠️ Minimum '+(currentCurrency==='BDT'?'৳50 BDT':'$1 USDT'));return;}
 const d=getUD(CU.uid);
 if((d.balance||0)<amt){showToast('⚠️ Insufficient balance');return;}
 d.balance=+(d.balance-amt).toFixed(6);setUD(CU.uid,d);
